@@ -10,7 +10,7 @@ public class CranksDungeons implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModAttributes.registerAttributes();
-
+		com.cranks.dungeons.command.TestAttributesCommand.register();
 		System.out.println("Cranks Dungeons: Custom attributes registered!");
 	}
 }
