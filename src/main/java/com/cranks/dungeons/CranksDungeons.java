@@ -1,15 +1,16 @@
 package com.cranks.dungeons;
 
+import com.cranks.dungeons.registry.ModAttributes;
 import net.fabricmc.api.ModInitializer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class CranksDungeons implements ModInitializer {
+
 	public static final String MOD_ID = "cranks-dungeons";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
+		ModAttributes.registerAttributes();
+
+		System.out.println("Cranks Dungeons: Custom attributes registered!");
 	}
 }
