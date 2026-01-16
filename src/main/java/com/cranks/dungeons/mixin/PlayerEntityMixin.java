@@ -1,6 +1,5 @@
 package com.cranks.dungeons.mixin;
 
-import com.cranks.dungeons.registry.ModAttributes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -20,20 +19,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
-    private static void addCustomAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        try {
-            Class.forName("com.cranks.dungeons.registry.ModAttributes");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Failed to load ModAttributes", e);
-        }
-
+    private static void modifyPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder builder = cir.getReturnValue();
-
-        builder.add(ModAttributes.FIRE_RESISTANCE)
-                .add(ModAttributes.COLD_RESISTANCE)
-                .add(ModAttributes.LIGHTNING_RESISTANCE)
-                .add(ModAttributes.VOID_RESISTANCE)
-                .add(ModAttributes.CRIT_CHANCE);
 
         builder.add(EntityAttributes.MAX_HEALTH, 28.0); // 20 default + 8 = 28
 
