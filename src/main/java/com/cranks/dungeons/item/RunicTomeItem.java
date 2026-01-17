@@ -8,14 +8,28 @@ import net.minecraft.util.Formatting;
 public class RunicTomeItem extends Item {
 
     private final int tier;
+    private final CustomRarity customRarity;
 
-    public RunicTomeItem(int tier, Settings settings) {
+    public RunicTomeItem(int tier, CustomRarity customRarity, Settings settings) {
         super(settings);
         this.tier = tier;
+        this.customRarity = customRarity;
     }
 
     public int getTier() {
         return tier;
+    }
+
+    public CustomRarity getCustomRarity() {
+        return customRarity;
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        return Text.empty()
+                .append(super.getName(stack))
+                .append(Text.literal(" "))
+                .append(Text.literal("[ " + customRarity.getName() + " ]").formatted(customRarity.getColor(), Formatting.BOLD));
     }
 
     @Override
