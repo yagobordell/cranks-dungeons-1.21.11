@@ -27,7 +27,8 @@ public abstract class LivingEntityMixin {
                 .add(ModAttributes.COLD_RESISTANCE)
                 .add(ModAttributes.LIGHTNING_RESISTANCE)
                 .add(ModAttributes.VOID_RESISTANCE)
-                .add(ModAttributes.CRIT_CHANCE);
+                .add(ModAttributes.CRIT_CHANCE)
+                .add(ModAttributes.LIFE_REGENERATION);
 
         cir.setReturnValue(builder);
     }

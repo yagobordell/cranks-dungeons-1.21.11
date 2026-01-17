@@ -3,9 +3,12 @@
 	"package": "com.cranks.dungeons.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"DamageReductionMixin",
 		"LivingEntityMixin",
-		"PlayerEntityMixin",
-		"DamageReductionMixin"
+		"LifeRegenerationMixin",
+		"PlayerEntityMixin"
+	],
+	"client": [
 	],
 	"injectors": {
 		"defaultRequire": 1

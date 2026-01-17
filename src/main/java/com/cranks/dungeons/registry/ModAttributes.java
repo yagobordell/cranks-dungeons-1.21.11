@@ -16,9 +16,10 @@ public class ModAttributes {
     public static final RegistryEntry<EntityAttribute> LIGHTNING_RESISTANCE = register("lightning_resistance", 0.0, 0.0, 0.75);
     public static final RegistryEntry<EntityAttribute> VOID_RESISTANCE = register("void_resistance", 0.0, 0.0, 0.75);
     public static final RegistryEntry<EntityAttribute> CRIT_CHANCE = register("crit_chance", 0.05, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> LIFE_REGENERATION = register("life_regeneration", 0.0, 0.0, 100.0);
 
     public static void registerAttributes() {
-        System.out.println("Custom attributes loaded: fire_resistance, cold_resistance, lightning_resistance, void_resistance, crit_chance");
+        System.out.println("Custom attributes loaded: fire_resistance, cold_resistance, lightning_resistance, void_resistance, crit_chance, life_regeneration");
     }
 
     private static RegistryEntry<EntityAttribute> register(String name, double base, double min, double max) {
