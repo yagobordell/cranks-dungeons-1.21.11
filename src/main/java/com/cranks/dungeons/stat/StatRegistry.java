@@ -19,7 +19,7 @@ public class StatRegistry {
                 new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
                 new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
                 false,
-                Formatting.RED
+                Formatting.WHITE
         ));
 
         register(new CustomStat(
@@ -30,7 +30,7 @@ public class StatRegistry {
                 new double[]{2.0, 5.0, 9.0, 14.0, 20.0},
                 new double[]{4.0, 8.0, 13.0, 19.0, 28.0},
                 true,
-                Formatting.RED
+                Formatting.YELLOW
         ));
 
         register(new CustomStat(
@@ -45,6 +45,83 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
+                "fire_damage",
+                "Fire Damage",
+                StatCategory.OFFENSIVE,
+                ModAttributes.FIRE_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "cold_damage",
+                "Cold Damage",
+                StatCategory.OFFENSIVE,
+                ModAttributes.COLD_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.AQUA
+        ));
+
+        register(new CustomStat(
+                "lightning_damage",
+                "Lightning Damage",
+                StatCategory.OFFENSIVE,
+                ModAttributes.LIGHTNING_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_BLUE
+        ));
+
+        register(new CustomStat(
+                "void_damage",
+                "Void Damage",
+                StatCategory.OFFENSIVE,
+                ModAttributes.VOID_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_PURPLE
+        ));
+
+        register(new CustomStat(
+                "life_steal",
+                "Life Steal",
+                StatCategory.OFFENSIVE,
+                ModAttributes.LIFE_STEAL,
+                new double[]{1.0, 3.0, 5.0, 8.0, 12.0},
+                new double[]{2.0, 5.0, 8.0, 12.0, 18.0},
+                true,
+                Formatting.DARK_RED
+        ));
+
+        register(new CustomStat(
+                "chance_to_burn",
+                "Chance to Ignite",
+                StatCategory.OFFENSIVE,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{5.0, 12.0, 20.0, 30.0, 42.0},
+                new double[]{10.0, 20.0, 30.0, 45.0, 65.0},
+                true,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "attack_range",
+                "Attack Range",
+                StatCategory.OFFENSIVE,
+                ModAttributes.ATTACK_RANGE,
+                new double[]{0.2, 0.5, 0.8, 1.2, 1.6},
+                new double[]{0.4, 0.8, 1.2, 1.8, 2.5},
+                false,
+                Formatting.GREEN
+        ));
+
+        register(new CustomStat(
                 "armor",
                 "Armor",
                 StatCategory.DEFENSIVE,
@@ -52,7 +129,7 @@ public class StatRegistry {
                 new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
                 new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
                 false,
-                Formatting.BLUE
+                Formatting.WHITE
         ));
 
         register(new CustomStat(
@@ -74,7 +151,7 @@ public class StatRegistry {
                 new double[]{0.3, 0.8, 1.5, 2.5, 4.0},
                 new double[]{0.6, 1.4, 2.4, 4.0, 6.0},
                 false,
-                Formatting.BLUE
+                Formatting.GRAY
         ));
 
         register(new CustomStat(
@@ -85,7 +162,7 @@ public class StatRegistry {
                 new double[]{5.0, 12.0, 20.0, 30.0, 42.0},
                 new double[]{10.0, 18.0, 28.0, 40.0, 60.0},
                 true,
-                Formatting.DARK_BLUE
+                Formatting.DARK_GRAY
         ));
 
         register(new CustomStat(
@@ -118,7 +195,7 @@ public class StatRegistry {
                 new double[]{18.0, 20.0, 23.0, 26.0, 30.0},
                 new double[]{22.0, 25.0, 28.0, 32.0, 38.0},
                 true,
-                Formatting.YELLOW
+                Formatting.DARK_BLUE
         ));
 
         register(new CustomStat(
@@ -140,7 +217,7 @@ public class StatRegistry {
                 new double[]{0.1, 0.25, 0.5, 0.8, 1.2},
                 new double[]{0.2, 0.45, 0.75, 1.2, 2.0},
                 false,
-                Formatting.LIGHT_PURPLE
+                Formatting.DARK_RED
         ));
 
         register(new CustomStat(

@@ -6,6 +6,7 @@
 		"DamageReductionMixin",
 		"LivingEntityMixin",
 		"LifeRegenerationMixin",
+		"ElementalDamageMixin",
 		"PlayerEntityMixin"
 	],
 	"client": [

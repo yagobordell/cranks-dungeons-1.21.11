@@ -15,11 +15,19 @@ public class ModAttributes {
     public static final RegistryEntry<EntityAttribute> COLD_RESISTANCE = register("cold_resistance", 0.0, 0.0, 0.75);
     public static final RegistryEntry<EntityAttribute> LIGHTNING_RESISTANCE = register("lightning_resistance", 0.0, 0.0, 0.75);
     public static final RegistryEntry<EntityAttribute> VOID_RESISTANCE = register("void_resistance", 0.0, 0.0, 0.75);
-    public static final RegistryEntry<EntityAttribute> CRIT_CHANCE = register("crit_chance", 0.05, 0.0, 1.0);
     public static final RegistryEntry<EntityAttribute> LIFE_REGENERATION = register("life_regeneration", 0.0, 0.0, 100.0);
 
+    public static final RegistryEntry<EntityAttribute> CRIT_CHANCE = register("crit_chance", 0.05, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> FIRE_DAMAGE = register("fire_damage", 0.0, 0.0, 100.0);
+    public static final RegistryEntry<EntityAttribute> COLD_DAMAGE = register("cold_damage", 0.0, 0.0, 100.0);
+    public static final RegistryEntry<EntityAttribute> LIGHTNING_DAMAGE = register("lightning_damage", 0.0, 0.0, 100.0);
+    public static final RegistryEntry<EntityAttribute> VOID_DAMAGE = register("void_damage", 0.0, 0.0, 100.0);
+    public static final RegistryEntry<EntityAttribute> LIFE_STEAL = register("life_steal", 0.0, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> CHANCE_TO_BURN = register("chance_to_burn", 0.0, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> ATTACK_RANGE = register("attack_range", 0.0, 0.0, 10.0);
+
     public static void registerAttributes() {
-        System.out.println("Custom attributes loaded: fire_resistance, cold_resistance, lightning_resistance, void_resistance, crit_chance, life_regeneration");
+        System.out.println("Custom attributes loaded: resistances, elemental damages, life steal, chance to burn, crit chance, life regeneration, attack range");
     }
 
     private static RegistryEntry<EntityAttribute> register(String name, double base, double min, double max) {
@@ -29,7 +37,6 @@ public class ModAttributes {
 
         Registry.register(Registries.ATTRIBUTE, id, attribute);
 
-        return Registries.ATTRIBUTE.getEntry(id).orElseThrow(() -> new IllegalStateException("Failed to register attribute: " + name)
-        );
+        return Registries.ATTRIBUTE.getEntry(id).orElseThrow(() -> new IllegalStateException("Failed to register attribute: " + name));
     }
 }

@@ -1,10 +1,8 @@
 package com.cranks.dungeons.mixin;
 
 import com.cranks.dungeons.registry.ModAttributes;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,8 +25,16 @@ public abstract class LivingEntityMixin {
                 .add(ModAttributes.COLD_RESISTANCE)
                 .add(ModAttributes.LIGHTNING_RESISTANCE)
                 .add(ModAttributes.VOID_RESISTANCE)
+                .add(ModAttributes.LIFE_REGENERATION)
+
                 .add(ModAttributes.CRIT_CHANCE)
-                .add(ModAttributes.LIFE_REGENERATION);
+                .add(ModAttributes.FIRE_DAMAGE)
+                .add(ModAttributes.COLD_DAMAGE)
+                .add(ModAttributes.LIGHTNING_DAMAGE)
+                .add(ModAttributes.VOID_DAMAGE)
+                .add(ModAttributes.LIFE_STEAL)
+                .add(ModAttributes.CHANCE_TO_BURN)
+                .add(ModAttributes.ATTACK_RANGE);
 
         cir.setReturnValue(builder);
     }
