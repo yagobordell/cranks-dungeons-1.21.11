@@ -27,8 +27,9 @@ public class StatRegistry {
                 "Attack Speed",
                 StatCategory.OFFENSIVE,
                 EntityAttributes.ATTACK_SPEED,
-                new double[]{2.0, 5.0, 9.0, 14.0, 20.0},
-                new double[]{4.0, 8.0, 13.0, 19.0, 28.0},
+                new double[]{0.10, 0.20, 0.30, 0.40, 0.50},
+                new double[]{0.18, 0.28, 0.38, 0.48, 0.58},
+                true,
                 true,
                 Formatting.YELLOW
         ));
@@ -38,8 +39,9 @@ public class StatRegistry {
                 "Critical Strike Chance",
                 StatCategory.OFFENSIVE,
                 ModAttributes.CRIT_CHANCE,
-                new double[]{1.0, 3.0, 6.0, 10.0, 15.0},
-                new double[]{2.0, 5.0, 9.0, 14.0, 22.0},
+                new double[]{0.01, 0.03, 0.06, 0.10, 0.15},
+                new double[]{0.02, 0.05, 0.09, 0.14, 0.22},
+                true,
                 true,
                 Formatting.GOLD
         ));
@@ -93,19 +95,21 @@ public class StatRegistry {
                 "Life Steal",
                 StatCategory.OFFENSIVE,
                 ModAttributes.LIFE_STEAL,
-                new double[]{1.0, 3.0, 5.0, 8.0, 12.0},
-                new double[]{2.0, 5.0, 8.0, 12.0, 18.0},
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
+                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                true,
                 true,
                 Formatting.DARK_RED
         ));
 
         register(new CustomStat(
                 "chance_to_burn",
-                "Chance to Ignite",
+                "Chance to burn",
                 StatCategory.OFFENSIVE,
                 ModAttributes.CHANCE_TO_BURN,
-                new double[]{5.0, 12.0, 20.0, 30.0, 42.0},
-                new double[]{10.0, 20.0, 30.0, 45.0, 65.0},
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
                 true,
                 Formatting.RED
         ));
@@ -159,8 +163,9 @@ public class StatRegistry {
                 "Knockback Resistance",
                 StatCategory.DEFENSIVE,
                 EntityAttributes.KNOCKBACK_RESISTANCE,
-                new double[]{5.0, 12.0, 20.0, 30.0, 42.0},
-                new double[]{10.0, 18.0, 28.0, 40.0, 60.0},
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.18, 0.28, 0.40, 0.60},
+                true,
                 true,
                 Formatting.DARK_GRAY
         ));
@@ -170,8 +175,9 @@ public class StatRegistry {
                 "Fire Resistance",
                 StatCategory.DEFENSIVE,
                 ModAttributes.FIRE_RESISTANCE,
-                new double[]{18.0, 20.0, 23.0, 26.0, 30.0},
-                new double[]{22.0, 25.0, 28.0, 32.0, 38.0},
+                new double[]{0.18, 0.20, 0.23, 0.26, 0.30},
+                new double[]{0.22, 0.25, 0.28, 0.32, 0.38},
+                true,
                 true,
                 Formatting.RED
         ));
@@ -181,8 +187,9 @@ public class StatRegistry {
                 "Cold Resistance",
                 StatCategory.DEFENSIVE,
                 ModAttributes.COLD_RESISTANCE,
-                new double[]{18.0, 20.0, 23.0, 26.0, 30.0},
-                new double[]{22.0, 25.0, 28.0, 32.0, 38.0},
+                new double[]{0.18, 0.20, 0.23, 0.26, 0.30},
+                new double[]{0.22, 0.25, 0.28, 0.32, 0.38},
+                true,
                 true,
                 Formatting.AQUA
         ));
@@ -192,8 +199,9 @@ public class StatRegistry {
                 "Lightning Resistance",
                 StatCategory.DEFENSIVE,
                 ModAttributes.LIGHTNING_RESISTANCE,
-                new double[]{18.0, 20.0, 23.0, 26.0, 30.0},
-                new double[]{22.0, 25.0, 28.0, 32.0, 38.0},
+                new double[]{0.18, 0.20, 0.23, 0.26, 0.30},
+                new double[]{0.22, 0.25, 0.28, 0.32, 0.38},
+                true,
                 true,
                 Formatting.DARK_BLUE
         ));
@@ -203,8 +211,9 @@ public class StatRegistry {
                 "Void Resistance",
                 StatCategory.DEFENSIVE,
                 ModAttributes.VOID_RESISTANCE,
-                new double[]{18.0, 20.0, 23.0, 26.0, 30.0},
-                new double[]{22.0, 25.0, 28.0, 32.0, 38.0},
+                new double[]{0.18, 0.20, 0.23, 0.26, 0.30},
+                new double[]{0.22, 0.25, 0.28, 0.32, 0.38},
+                true,
                 true,
                 Formatting.DARK_PURPLE
         ));
@@ -221,25 +230,26 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
+                "movement_speed",
+                "Movement Speed",
+                StatCategory.UTILITY,
+                EntityAttributes.MOVEMENT_SPEED,
+                new double[]{0.02, 0.05, 0.09, 0.14, 0.20},
+                new double[]{0.04, 0.08, 0.13, 0.19, 0.28},
+                true,
+                true,
+                Formatting.GREEN
+        ));
+
+        register(new CustomStat(
                 "luck",
                 "Luck",
-                StatCategory.DEFENSIVE,
+                StatCategory.UTILITY,
                 EntityAttributes.LUCK,
                 new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
                 new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
                 false,
                 Formatting.GOLD
-        ));
-
-        register(new CustomStat(
-                "movement_speed",
-                "Movement Speed",
-                StatCategory.UTILITY,
-                EntityAttributes.MOVEMENT_SPEED,
-                new double[]{2.0, 5.0, 9.0, 14.0, 20.0},
-                new double[]{4.0, 8.0, 13.0, 19.0, 28.0},
-                true,
-                Formatting.GREEN
         ));
 
         System.out.println("Registered " + STATS.size() + " custom stats");

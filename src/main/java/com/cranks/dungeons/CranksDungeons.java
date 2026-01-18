@@ -16,8 +16,10 @@ public class CranksDungeons implements ModInitializer {
 	public void onInitialize() {
 		ModItems.registerModItems();
 		ModAttributes.registerAttributes();
-		StatRegistry.registerStats();  // NEW LINE
+		StatRegistry.registerStats();
 		com.cranks.dungeons.command.TestAttributesCommand.register();
+		com.cranks.dungeons.command.ApplyStatCommand.register();
+		com.cranks.dungeons.command.CheckStatsCommand.register(); // NEW LINE
 		LOGGER.info("Cranks Dungeons initialized!");
 	}
 }

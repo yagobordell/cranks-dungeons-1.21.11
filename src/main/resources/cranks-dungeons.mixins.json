@@ -7,7 +7,11 @@
 		"LivingEntityMixin",
 		"LifeRegenerationMixin",
 		"ElementalDamageMixin",
-		"PlayerEntityMixin"
+		"PlayerEntityMixin",
+		"PlayerEquipmentChangeMixin",
+		"ServerPlayerEntityMixin",
+		"ItemStackTooltipMixin",
+		"AttackRangeMixin"
 	],
 	"client": [
 	],

@@ -56,36 +56,52 @@ public class ItemStatManager {
     }
 
     public static boolean addRandomStat(ItemStack stack, int tier) {
+        System.out.println("=== addRandomStat called ===");
+        System.out.println("Current stats: " + getStats(stack).size() + "/4");
+
         if (!canAddStat(stack)) {
+            System.out.println("Cannot add stat - already at max");
             return false;
         }
 
         Optional<EquipmentType> equipType = EquipmentType.getTypeForItem(stack);
         if (equipType.isEmpty()) {
+            System.out.println("Cannot add stat - item not recognized as equipment");
             return false;
         }
+
+        System.out.println("Equipment type: " + equipType.get());
 
         List<StatCategory> allowedCategories = equipType.get().getAllowedCategories();
         if (allowedCategories.isEmpty()) {
+            System.out.println("Cannot add stat - no allowed categories");
             return false;
         }
 
+        System.out.println("Allowed categories: " + allowedCategories);
+
         StatCategory category = allowedCategories.get(new Random().nextInt(allowedCategories.size()));
+        System.out.println("Selected category: " + category);
 
         CustomStat stat = StatRegistry.getRandomStatForCategory(category);
         if (stat == null) {
+            System.out.println("Cannot add stat - no stats available for category " + category);
             return false;
         }
+
+        System.out.println("Selected stat: " + stat.getId());
 
         List<ItemStat> existingStats = getStats(stack);
         boolean alreadyHasStat = existingStats.stream()
                 .anyMatch(s -> s.statId.equals(stat.getId()));
 
         if (alreadyHasStat) {
+            System.out.println("Cannot add stat - already has " + stat.getId());
             return false;
         }
 
         double value = stat.rollValue(tier);
+        System.out.println("Rolled value: " + value);
 
         NbtCompound nbt = stack.getOrDefault(net.minecraft.component.DataComponentTypes.CUSTOM_DATA,
                 net.minecraft.component.type.NbtComponent.DEFAULT).copyNbt();
@@ -107,6 +123,7 @@ public class ItemStatManager {
         stack.set(net.minecraft.component.DataComponentTypes.CUSTOM_DATA,
                 net.minecraft.component.type.NbtComponent.of(nbt));
 
+        System.out.println("Successfully added stat!");
         return true;
     }
 
@@ -115,12 +132,12 @@ public class ItemStatManager {
 
         if (!stats.isEmpty()) {
             tooltip.add(Text.empty());
-            tooltip.add(Text.literal("Enhanced Stats:").formatted(net.minecraft.util.Formatting.GOLD));
+            tooltip.add(Text.literal("Enhanced Stats:").formatted(net.minecraft.util.Formatting.GOLD, net.minecraft.util.Formatting.BOLD));
 
             for (ItemStat itemStat : stats) {
                 CustomStat stat = StatRegistry.getStat(itemStat.statId);
                 if (stat != null) {
-                    tooltip.add(stat.getFormattedValue(itemStat.value));
+                    tooltip.add(Text.literal("  ").append(stat.getFormattedValue(itemStat.value)));
                 }
             }
         }

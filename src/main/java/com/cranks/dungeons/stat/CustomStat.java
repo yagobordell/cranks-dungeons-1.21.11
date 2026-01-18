@@ -13,12 +13,20 @@ public class CustomStat {
     private final double[] tierMinValues;
     private final double[] tierMaxValues;
     private final boolean isPercentage;
+    private final boolean storeAsDecimal; // NEW: If true, value is 0.0-1.0 and needs *100 for display
     private final Formatting color;
 
     public CustomStat(String id, String name, StatCategory category,
                       RegistryEntry<EntityAttribute> attribute,
                       double[] tierMinValues, double[] tierMaxValues,
                       boolean isPercentage, Formatting color) {
+        this(id, name, category, attribute, tierMinValues, tierMaxValues, isPercentage, false, color);
+    }
+
+    public CustomStat(String id, String name, StatCategory category,
+                      RegistryEntry<EntityAttribute> attribute,
+                      double[] tierMinValues, double[] tierMaxValues,
+                      boolean isPercentage, boolean storeAsDecimal, Formatting color) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -26,6 +34,7 @@ public class CustomStat {
         this.tierMinValues = tierMinValues;
         this.tierMaxValues = tierMaxValues;
         this.isPercentage = isPercentage;
+        this.storeAsDecimal = storeAsDecimal;
         this.color = color;
     }
 
@@ -51,9 +60,18 @@ public class CustomStat {
     }
 
     public Text getFormattedValue(double value) {
-        String formatted = isPercentage ?
-                String.format("%.1f%%", value) :
-                String.format("%.1f", value);
+        String formatted;
+
+        if (isPercentage) {
+            if (storeAsDecimal) {
+                formatted = String.format("%.1f%%", value * 100);
+            } else {
+                formatted = String.format("%.1f%%", value);
+            }
+        } else {
+            formatted = String.format("%.1f", value);
+        }
+
         return Text.literal("+" + formatted + " " + name).formatted(color);
     }
 }

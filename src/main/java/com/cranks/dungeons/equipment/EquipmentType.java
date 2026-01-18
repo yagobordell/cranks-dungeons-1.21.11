@@ -52,7 +52,12 @@ public enum EquipmentType {
 
         String itemName = item.toString().toLowerCase();
 
-        if (itemName.contains("sword")) return Optional.of(SWORD);
+        System.out.println("Checking equipment type for: " + itemName); // DEBUG
+
+        if (itemName.contains("sword")) {
+            System.out.println("Recognized as SWORD");
+            return Optional.of(SWORD);
+        }
 
         if (itemName.contains("axe") && !itemName.contains("pickaxe")) return Optional.of(AXE);
 
@@ -67,6 +72,7 @@ public enum EquipmentType {
         if (itemName.contains("shield")) return Optional.of(SHIELD);
         if (itemName.contains("elytra")) return Optional.of(ELYTRA);
 
+        System.out.println("NOT RECOGNIZED as any equipment type"); // DEBUG
         return Optional.empty();
     }
 

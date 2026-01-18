@@ -105,8 +105,12 @@ public abstract class ElementalDamageMixin {
                 }
 
                 double chanceToBurn = attacker.getAttributeValue(ModAttributes.CHANCE_TO_BURN);
-                if (chanceToBurn > 0 && Math.random() < chanceToBurn) {
-                    ((net.minecraft.entity.Entity) target).setOnFireFor(4.0f);
+                if (chanceToBurn > 0) {
+                    // chanceToBurn is between 0.0 and 1.0 (e.g., 0.5 = 50%)
+                    double roll = Math.random(); // 0.0 to 1.0
+                    if (roll < chanceToBurn) {
+                        ((net.minecraft.entity.Entity) target).setOnFireFor(4.0f);
+                    }
                 }
 
             } finally {
