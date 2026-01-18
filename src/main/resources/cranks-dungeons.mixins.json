@@ -11,7 +11,14 @@
 		"PlayerEquipmentChangeMixin",
 		"ServerPlayerEntityMixin",
 		"ItemStackTooltipMixin",
-		"AttackRangeMixin"
+		"AttackRangeMixin",
+		"KnockbackMixin",
+		"MiningEfficiencyMixin",
+		"DurabilityBonusMixin",
+		"PrecisionMiningPlayerMixin",
+		"ExperienceBonusMixin",
+		"BreakingRangeMixin",
+		"FeatherFallingMixin"
 	],
 	"client": [
 	],

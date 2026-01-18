@@ -47,6 +47,17 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
+                "knockback",
+                "Knockback",
+                StatCategory.OFFENSIVE,
+                ModAttributes.KNOCKBACK,
+                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
+                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                false,
+                Formatting.DARK_GREEN
+        ));
+
+        register(new CustomStat(
                 "fire_damage",
                 "Fire Damage",
                 StatCategory.OFFENSIVE,
@@ -230,12 +241,24 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
-                "movement_speed",
-                "Movement Speed",
+                "experience_bonus",
+                "Experience Bonus",
+                StatCategory.DEFENSIVE,
+                ModAttributes.EXPERIENCE_BONUS,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.18, 0.28, 0.42, 0.60},
+                true,
+                true,
+                Formatting.GREEN
+        ));
+
+        register(new CustomStat(
+                "experience_bonus",
+                "Experience Bonus",
                 StatCategory.UTILITY,
-                EntityAttributes.MOVEMENT_SPEED,
-                new double[]{0.02, 0.05, 0.09, 0.14, 0.20},
-                new double[]{0.04, 0.08, 0.13, 0.19, 0.28},
+                ModAttributes.EXPERIENCE_BONUS,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.18, 0.28, 0.42, 0.60},
                 true,
                 true,
                 Formatting.GREEN
@@ -250,6 +273,89 @@ public class StatRegistry {
                 new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
                 false,
                 Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "movement_speed",
+                "Movement Speed",
+                StatCategory.UTILITY,
+                EntityAttributes.MOVEMENT_SPEED,
+                new double[]{0.01, 0.025, 0.045, 0.07, 0.10},
+                new double[]{0.02, 0.04, 0.065, 0.095, 0.125},
+                true,
+                true,
+                Formatting.GREEN
+        ));
+
+        register(new CustomStat(
+                "feather_falling",
+                "Feather Falling",
+                StatCategory.UTILITY,
+                ModAttributes.FEATHER_FALLING,
+                new double[]{0.10, 0.18, 0.28, 0.40, 0.55},
+                new double[]{0.15, 0.25, 0.38, 0.55, 0.75},
+                true,
+                true,
+                Formatting.WHITE
+        ));
+
+        register(new CustomStat(
+                "mining_efficiency",
+                "Mining Efficiency",
+                StatCategory.TOOL,
+                ModAttributes.MINING_EFFICIENCY,
+                new double[]{0.08, 0.15, 0.23, 0.32, 0.42},
+                new double[]{0.12, 0.22, 0.32, 0.45, 0.60},
+                true,
+                true,
+                Formatting.GRAY
+        ));
+
+        register(new CustomStat(
+                "fortune",
+                "Fortune",
+                StatCategory.TOOL,
+                ModAttributes.FORTUNE,
+                new double[]{0.10, 0.18, 0.28, 0.40, 0.55},
+                new double[]{0.15, 0.28, 0.40, 0.55, 0.75},
+                true,
+                true,
+                Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "durability_bonus",
+                "Durability Bonus",
+                StatCategory.TOOL,
+                ModAttributes.DURABILITY_BONUS,
+                new double[]{0.10, 0.18, 0.28, 0.40, 0.55},
+                new double[]{0.15, 0.25, 0.38, 0.55, 0.75},
+                true,
+                true,
+                Formatting.BLUE
+        ));
+
+        register(new CustomStat(
+                "precision_mining",
+                "Precision Mining",
+                StatCategory.TOOL,
+                ModAttributes.PRECISION_MINING,
+                new double[]{0.03, 0.08, 0.13, 0.18, 0.25},
+                new double[]{0.05, 0.12, 0.18, 0.25, 0.35},
+                true,
+                true,
+                Formatting.AQUA
+        ));
+
+        register(new CustomStat(
+                "breaking_range",
+                "Breaking Range",
+                StatCategory.TOOL,
+                ModAttributes.BREAKING_RANGE,
+                new double[]{0.3, 0.6, 1.0, 1.4, 1.8},
+                new double[]{0.5, 1.0, 1.5, 2.0, 2.8},
+                false,
+                Formatting.GREEN
         ));
 
         System.out.println("Registered " + STATS.size() + " custom stats");

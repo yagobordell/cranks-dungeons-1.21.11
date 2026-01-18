@@ -25,9 +25,19 @@ public class ModAttributes {
     public static final RegistryEntry<EntityAttribute> LIFE_STEAL = register("life_steal", 0.0, 0.0, 1.0);
     public static final RegistryEntry<EntityAttribute> CHANCE_TO_BURN = register("chance_to_burn", 0.0, 0.0, 1.0);
     public static final RegistryEntry<EntityAttribute> ATTACK_RANGE = register("attack_range", 0.0, 0.0, 10.0);
+    public static final RegistryEntry<EntityAttribute> KNOCKBACK = register("knockback", 0.0, 0.0, 10.0);
+
+    public static final RegistryEntry<EntityAttribute> MINING_EFFICIENCY = register("mining_efficiency", 0.0, 0.0, 10.0);
+    public static final RegistryEntry<EntityAttribute> FORTUNE = register("fortune", 0.0, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> DURABILITY_BONUS = register("durability_bonus", 0.0, 0.0, 10.0);
+    public static final RegistryEntry<EntityAttribute> EXPERIENCE_BONUS = register("experience_bonus", 0.0, 0.0, 10.0);
+    public static final RegistryEntry<EntityAttribute> PRECISION_MINING = register("precision_mining", 0.0, 0.0, 1.0);
+    public static final RegistryEntry<EntityAttribute> BREAKING_RANGE = register("breaking_range", 0.0, 0.0, 5.0);
+
+    public static final RegistryEntry<EntityAttribute> FEATHER_FALLING = register("feather_falling", 0.0, 0.0, 0.75);
 
     public static void registerAttributes() {
-        System.out.println("Custom attributes loaded: resistances, elemental damages, life steal, chance to burn, crit chance, life regeneration, attack range");
+        System.out.println("Custom attributes loaded");
     }
 
     private static RegistryEntry<EntityAttribute> register(String name, double base, double min, double max) {

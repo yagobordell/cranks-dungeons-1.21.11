@@ -34,7 +34,17 @@ public abstract class LivingEntityMixin {
                 .add(ModAttributes.VOID_DAMAGE)
                 .add(ModAttributes.LIFE_STEAL)
                 .add(ModAttributes.CHANCE_TO_BURN)
-                .add(ModAttributes.ATTACK_RANGE);
+                .add(ModAttributes.ATTACK_RANGE)
+                .add(ModAttributes.KNOCKBACK)
+
+                .add(ModAttributes.MINING_EFFICIENCY)
+                .add(ModAttributes.FORTUNE)
+                .add(ModAttributes.DURABILITY_BONUS)
+                .add(ModAttributes.EXPERIENCE_BONUS)
+                .add(ModAttributes.PRECISION_MINING)
+                .add(ModAttributes.BREAKING_RANGE)
+
+                .add(ModAttributes.FEATHER_FALLING);
 
         cir.setReturnValue(builder);
     }

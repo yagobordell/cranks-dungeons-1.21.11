@@ -3,6 +3,7 @@ package com.cranks.dungeons.equipment;
 import com.cranks.dungeons.CranksDungeons;
 import com.cranks.dungeons.stat.CustomStat;
 import com.cranks.dungeons.stat.StatRegistry;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,12 +36,12 @@ public class EquipmentStatApplier {
         }
 
         ItemStack mainHand = player.getEquippedStack(EquipmentSlot.MAINHAND);
-        if (!mainHand.isEmpty()) {
+        if (!mainHand.isEmpty() && !isArmor(mainHand)) {
             equippedItems.add(mainHand);
         }
 
         ItemStack offhand = player.getEquippedStack(EquipmentSlot.OFFHAND);
-        if (!offhand.isEmpty()) {
+        if (!offhand.isEmpty() && !isArmor(offhand)) {
             equippedItems.add(offhand);
         }
 
@@ -62,6 +63,19 @@ public class EquipmentStatApplier {
                 applyStatModifier(player, stat, totalValue);
             }
         }
+    }
+
+    private static boolean isArmor(ItemStack stack) {
+        var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
+        if (equippable == null) {
+            return false;
+        }
+
+        EquipmentSlot slot = equippable.slot();
+        return slot == EquipmentSlot.HEAD ||
+                slot == EquipmentSlot.CHEST ||
+                slot == EquipmentSlot.LEGS ||
+                slot == EquipmentSlot.FEET;
     }
 
     private static void applyStatModifier(PlayerEntity player, CustomStat stat, double value) {

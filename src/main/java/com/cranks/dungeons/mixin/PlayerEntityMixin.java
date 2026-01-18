@@ -22,8 +22,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private static void modifyPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder builder = cir.getReturnValue();
 
-        builder.add(EntityAttributes.MAX_HEALTH, 28.0); // 20 default + 8 = 28
-
         cir.setReturnValue(builder);
     }
 }

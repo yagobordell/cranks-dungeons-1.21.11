@@ -19,7 +19,7 @@ public class ApplyStatCommand {
                                 ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
                                 int tier = IntegerArgumentType.getInteger(context, "tier");
 
-                                ItemStack sword = new ItemStack(Items.DIAMOND_CHESTPLATE);
+                                ItemStack sword = new ItemStack(Items.DIAMOND_BOOTS);
 
                                 int addedStats = 0;
                                 int maxRetries = 20;

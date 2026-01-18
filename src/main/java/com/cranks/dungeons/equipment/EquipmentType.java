@@ -1,20 +1,20 @@
 package com.cranks.dungeons.equipment;
 
 import com.cranks.dungeons.stat.StatCategory;
-import net.minecraft.component.type.EquippableComponent;
-import net.minecraft.item.*;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.item.*;
+import net.minecraft.entity.EquipmentSlot;
 
 import java.util.*;
 
 public enum EquipmentType {
-    HELMET(StatCategory.DEFENSIVE),
+    HELMET(StatCategory.DEFENSIVE, StatCategory.UTILITY),
     CHESTPLATE(StatCategory.DEFENSIVE, StatCategory.OFFENSIVE),
     LEGGINGS(StatCategory.DEFENSIVE),
     BOOTS(StatCategory.DEFENSIVE, StatCategory.UTILITY),
 
     SWORD(StatCategory.OFFENSIVE),
-    AXE(StatCategory.TOOL),
+    AXE(StatCategory.TOOL),              // Changed: Only TOOL stats
     PICKAXE(StatCategory.TOOL),
     SHOVEL(StatCategory.TOOL),
     HOE(StatCategory.TOOL),
@@ -39,7 +39,7 @@ public enum EquipmentType {
     public static Optional<EquipmentType> getTypeForItem(ItemStack stack) {
         Item item = stack.getItem();
 
-        EquippableComponent equippable = stack.get(DataComponentTypes.EQUIPPABLE);
+        var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
         if (equippable != null) {
             return switch (equippable.slot()) {
                 case HEAD -> Optional.of(HELMET);
@@ -52,7 +52,7 @@ public enum EquipmentType {
 
         String itemName = item.toString().toLowerCase();
 
-        System.out.println("Checking equipment type for: " + itemName); // DEBUG
+        System.out.println("Checking equipment type for: " + itemName);
 
         if (itemName.contains("sword")) {
             System.out.println("Recognized as SWORD");
@@ -72,7 +72,7 @@ public enum EquipmentType {
         if (itemName.contains("shield")) return Optional.of(SHIELD);
         if (itemName.contains("elytra")) return Optional.of(ELYTRA);
 
-        System.out.println("NOT RECOGNIZED as any equipment type"); // DEBUG
+        System.out.println("NOT RECOGNIZED as any equipment type");
         return Optional.empty();
     }
 

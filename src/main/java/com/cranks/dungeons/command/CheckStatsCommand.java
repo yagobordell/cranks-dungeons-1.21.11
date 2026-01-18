@@ -18,7 +18,6 @@ public class CheckStatsCommand {
 
                         player.sendMessage(Text.literal("=== Your Current Stats ===").formatted(Formatting.GOLD, Formatting.BOLD), false);
 
-                        // Offensive stats
                         player.sendMessage(Text.literal("Offensive:").formatted(Formatting.RED, Formatting.BOLD), false);
                         player.sendMessage(Text.literal("  Attack Damage: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.ATTACK_DAMAGE))), false);
                         player.sendMessage(Text.literal("  Attack Speed: " + String.format("%.1f%%", player.getAttributeValue(EntityAttributes.ATTACK_SPEED) * 100)), false);
@@ -30,21 +29,24 @@ public class CheckStatsCommand {
                         player.sendMessage(Text.literal("  Life Steal: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.LIFE_STEAL) * 100)), false);
                         player.sendMessage(Text.literal("  Chance to Burn: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.CHANCE_TO_BURN) * 100)), false);
                         player.sendMessage(Text.literal("  Attack Range: +" + String.format("%.1f", player.getAttributeValue(ModAttributes.ATTACK_RANGE))), false);
+                        player.sendMessage(Text.literal("  Knockback: +" + String.format("%.1f", player.getAttributeValue(ModAttributes.KNOCKBACK))), false);
 
-                        // Defensive stats
                         player.sendMessage(Text.literal("Defensive:").formatted(Formatting.BLUE, Formatting.BOLD), false);
                         player.sendMessage(Text.literal("  Max Health: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.MAX_HEALTH))), false);
+                        player.sendMessage(Text.literal("  Life Regen: " + String.format("%.2f HP/s", player.getAttributeValue(ModAttributes.LIFE_REGENERATION))), false);
                         player.sendMessage(Text.literal("  Armor: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.ARMOR))), false);
+                        player.sendMessage(Text.literal("  Armor Toughness: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.ARMOR_TOUGHNESS))), false);
                         player.sendMessage(Text.literal("  Fire Resistance: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.FIRE_RESISTANCE) * 100)), false);
                         player.sendMessage(Text.literal("  Cold Resistance: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.COLD_RESISTANCE) * 100)), false);
                         player.sendMessage(Text.literal("  Lightning Resistance: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.LIGHTNING_RESISTANCE) * 100)), false);
                         player.sendMessage(Text.literal("  Void Resistance: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.VOID_RESISTANCE) * 100)), false);
-                        player.sendMessage(Text.literal("  Life Regen: " + String.format("%.2f HP/s", player.getAttributeValue(ModAttributes.LIFE_REGENERATION))), false);
+                        player.sendMessage(Text.literal("  Knockback Resistance: " + String.format("%.1f%%", player.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE) * 100)), false);
 
-                        // Utility stats
                         player.sendMessage(Text.literal("Utility:").formatted(Formatting.GREEN, Formatting.BOLD), false);
                         player.sendMessage(Text.literal("  Movement Speed: " + String.format("%.1f%%", player.getAttributeValue(EntityAttributes.MOVEMENT_SPEED) * 100)), false);
                         player.sendMessage(Text.literal("  Luck: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.LUCK))), false);
+                        player.sendMessage(Text.literal("  Feather Falling: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.FEATHER_FALLING) * 100)), false);
+                        player.sendMessage(Text.literal("  Experience Bonus: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.EXPERIENCE_BONUS) * 100)), false);
 
                         return 1;
                     }));

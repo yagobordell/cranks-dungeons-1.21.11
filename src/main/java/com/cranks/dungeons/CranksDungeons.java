@@ -19,7 +19,9 @@ public class CranksDungeons implements ModInitializer {
 		StatRegistry.registerStats();
 		com.cranks.dungeons.command.TestAttributesCommand.register();
 		com.cranks.dungeons.command.ApplyStatCommand.register();
-		com.cranks.dungeons.command.CheckStatsCommand.register(); // NEW LINE
+		com.cranks.dungeons.command.CheckStatsCommand.register();
+		com.cranks.dungeons.event.FortuneEventHandler.register();
+		com.cranks.dungeons.event.PrecisionMiningHandler.register();
 		LOGGER.info("Cranks Dungeons initialized!");
 	}
 }
