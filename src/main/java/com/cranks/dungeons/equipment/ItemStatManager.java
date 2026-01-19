@@ -12,7 +12,7 @@ import java.util.*;
 
 public class ItemStatManager {
     private static final String STATS_KEY = "CustomStats";
-    private static final int MAX_STATS = 4;
+    private static final int MAX_STATS = 5;
 
     public static class ItemStat {
         public final String statId;
@@ -57,7 +57,7 @@ public class ItemStatManager {
 
     public static boolean addRandomStat(ItemStack stack, int tier) {
         System.out.println("=== addRandomStat called ===");
-        System.out.println("Current stats: " + getStats(stack).size() + "/4");
+        System.out.println("Current stats: " + getStats(stack).size() + "/5");
 
         if (!canAddStat(stack)) {
             System.out.println("Cannot add stat - already at max");
@@ -92,11 +92,24 @@ public class ItemStatManager {
         System.out.println("Selected stat: " + stat.getId());
 
         List<ItemStat> existingStats = getStats(stack);
+        CustomStat newTmpStat = stat;
+
         boolean alreadyHasStat = existingStats.stream()
-                .anyMatch(s -> s.statId.equals(stat.getId()));
+                .anyMatch(s -> {
+                    CustomStat existingStat = StatRegistry.getStat(s.statId);
+                    if (existingStat == null) return false;
+
+                    if (s.statId.equals(newTmpStat.getId())) return true;
+
+                    if (existingStat.getAttribute().equals(newTmpStat.getAttribute())) {
+                        return true;
+                    }
+
+                    return false;
+                });
 
         if (alreadyHasStat) {
-            System.out.println("Cannot add stat - already has " + stat.getId());
+            System.out.println("Cannot add stat - already has " + stat.getId() + " or same attribute");
             return false;
         }
 

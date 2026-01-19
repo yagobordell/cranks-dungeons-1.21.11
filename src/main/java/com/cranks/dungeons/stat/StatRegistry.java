@@ -152,8 +152,8 @@ public class StatRegistry {
                 "Max Health",
                 StatCategory.DEFENSIVE,
                 EntityAttributes.MAX_HEALTH,
-                new double[]{2.0, 4.0, 7.0, 11.0, 16.0},
-                new double[]{3.0, 6.0, 10.0, 15.0, 24.0},
+                new double[]{1.0, 2.0, 4.5, 5.5, 8.0},
+                new double[]{1.5, 3.0, 5.0, 7.5, 12.0},
                 false,
                 Formatting.DARK_RED
         ));
@@ -241,7 +241,7 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
-                "experience_bonus",
+                "experience_bonus_defensive",
                 "Experience Bonus",
                 StatCategory.DEFENSIVE,
                 ModAttributes.EXPERIENCE_BONUS,
@@ -253,7 +253,18 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
-                "experience_bonus",
+                "luck_defensive",
+                "Luck",
+                StatCategory.DEFENSIVE,
+                EntityAttributes.LUCK,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
+                false,
+                Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "experience_bonus_utility",
                 "Experience Bonus",
                 StatCategory.UTILITY,
                 ModAttributes.EXPERIENCE_BONUS,
@@ -265,7 +276,7 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
-                "luck",
+                "luck_utility",
                 "Luck",
                 StatCategory.UTILITY,
                 EntityAttributes.LUCK,

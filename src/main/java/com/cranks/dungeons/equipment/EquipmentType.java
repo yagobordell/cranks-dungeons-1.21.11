@@ -8,13 +8,13 @@ import net.minecraft.entity.EquipmentSlot;
 import java.util.*;
 
 public enum EquipmentType {
-    HELMET(StatCategory.DEFENSIVE, StatCategory.UTILITY),
+    HELMET(StatCategory.DEFENSIVE),
     CHESTPLATE(StatCategory.DEFENSIVE, StatCategory.OFFENSIVE),
     LEGGINGS(StatCategory.DEFENSIVE),
     BOOTS(StatCategory.DEFENSIVE, StatCategory.UTILITY),
 
     SWORD(StatCategory.OFFENSIVE),
-    AXE(StatCategory.TOOL),              // Changed: Only TOOL stats
+    AXE(StatCategory.TOOL),
     PICKAXE(StatCategory.TOOL),
     SHOVEL(StatCategory.TOOL),
     HOE(StatCategory.TOOL),
