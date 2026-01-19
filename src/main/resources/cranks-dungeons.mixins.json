@@ -18,6 +18,7 @@
 		"PrecisionMiningPlayerMixin",
 		"ExperienceBonusMixin",
 		"BreakingRangeMixin",
+		"CriticalStrikeMixin",
 		"MovementMixin",
 		"FeatherFallingMixin"
 	],
