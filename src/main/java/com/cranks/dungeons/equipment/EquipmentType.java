@@ -14,6 +14,8 @@ public enum EquipmentType {
     BOOTS(StatCategory.DEFENSIVE, StatCategory.UTILITY),
 
     SWORD(StatCategory.OFFENSIVE),
+    SPEAR(StatCategory.OFFENSIVE),
+    MACE(StatCategory.OFFENSIVE),
     AXE(StatCategory.TOOL),
     PICKAXE(StatCategory.TOOL),
     SHOVEL(StatCategory.TOOL),
@@ -57,6 +59,10 @@ public enum EquipmentType {
         if (itemName.contains("sword")) {
             System.out.println("Recognized as SWORD");
             return Optional.of(SWORD);
+        }
+        if (itemName.contains("mace")) return Optional.of(MACE);
+        if (itemName.contains("spear")) {
+            return Optional.of(SPEAR);
         }
 
         if (itemName.contains("axe") && !itemName.contains("pickaxe")) return Optional.of(AXE);
