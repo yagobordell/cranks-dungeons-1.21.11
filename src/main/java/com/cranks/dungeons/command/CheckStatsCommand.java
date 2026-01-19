@@ -2,6 +2,7 @@ package com.cranks.dungeons.command;
 
 import com.cranks.dungeons.registry.ModAttributes;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,7 +21,18 @@ public class CheckStatsCommand {
 
                         player.sendMessage(Text.literal("Offensive:").formatted(Formatting.RED, Formatting.BOLD), false);
                         player.sendMessage(Text.literal("  Attack Damage: " + String.format("%.1f", player.getAttributeValue(EntityAttributes.ATTACK_DAMAGE))), false);
-                        player.sendMessage(Text.literal("  Attack Speed: " + String.format("%.1f%%", player.getAttributeValue(EntityAttributes.ATTACK_SPEED) * 100)), false);
+
+                        EntityAttributeInstance attackSpeedInst = player.getAttributeInstance(EntityAttributes.ATTACK_SPEED);
+                        double bonusAttackSpeed = 0;
+
+                        if (attackSpeedInst != null) {
+                            bonusAttackSpeed = attackSpeedInst.getModifiers().stream()
+                                    .mapToDouble(net.minecraft.entity.attribute.EntityAttributeModifier::value)
+                                    .filter(value -> value > 0)
+                                    .sum();
+                        }
+
+                        player.sendMessage(Text.literal("  Attack Speed: " + String.format("%.1f%%", bonusAttackSpeed * 100)), false);
                         player.sendMessage(Text.literal("  Crit Chance: " + String.format("%.1f%%", player.getAttributeValue(ModAttributes.CRIT_CHANCE) * 100)), false);
                         player.sendMessage(Text.literal("  Fire Damage: " + String.format("%.1f", player.getAttributeValue(ModAttributes.FIRE_DAMAGE))), false);
                         player.sendMessage(Text.literal("  Cold Damage: " + String.format("%.1f", player.getAttributeValue(ModAttributes.COLD_DAMAGE))), false);
