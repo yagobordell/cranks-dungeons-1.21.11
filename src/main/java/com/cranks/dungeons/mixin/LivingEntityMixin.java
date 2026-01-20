@@ -21,13 +21,22 @@ public abstract class LivingEntityMixin {
 
         DefaultAttributeContainer.Builder builder = cir.getReturnValue();
 
-        builder.add(ModAttributes.FIRE_RESISTANCE)
+        builder
+                // Defensive
+                .add(ModAttributes.FIRE_RESISTANCE)
                 .add(ModAttributes.COLD_RESISTANCE)
                 .add(ModAttributes.LIGHTNING_RESISTANCE)
                 .add(ModAttributes.VOID_RESISTANCE)
+                .add(ModAttributes.KNOCKBACK_RESISTANCE)
+                .add(ModAttributes.BONUS_ARMOR)
+                .add(ModAttributes.BONUS_ARMOR_TOUGHNESS)
                 .add(ModAttributes.LIFE_REGENERATION)
+                .add(ModAttributes.MAX_HEALTH_BONUS)
+                .add(ModAttributes.FEATHER_FALLING)
 
+                // Offensive
                 .add(ModAttributes.CRIT_CHANCE)
+                .add(ModAttributes.BONUS_ATTACK_DAMAGE)
                 .add(ModAttributes.FIRE_DAMAGE)
                 .add(ModAttributes.COLD_DAMAGE)
                 .add(ModAttributes.LIGHTNING_DAMAGE)
@@ -35,16 +44,18 @@ public abstract class LivingEntityMixin {
                 .add(ModAttributes.LIFE_STEAL)
                 .add(ModAttributes.CHANCE_TO_BURN)
                 .add(ModAttributes.ATTACK_RANGE)
+                .add(ModAttributes.ATTACK_SPEED)
                 .add(ModAttributes.KNOCKBACK)
 
+                // Utility
                 .add(ModAttributes.MINING_EFFICIENCY)
                 .add(ModAttributes.FORTUNE)
                 .add(ModAttributes.DURABILITY_BONUS)
                 .add(ModAttributes.EXPERIENCE_BONUS)
                 .add(ModAttributes.PRECISION_MINING)
                 .add(ModAttributes.BREAKING_RANGE)
-
-                .add(ModAttributes.FEATHER_FALLING);
+                .add(ModAttributes.MOVEMENT_SPEED)
+                .add(ModAttributes.LUCK);
 
         cir.setReturnValue(builder);
     }

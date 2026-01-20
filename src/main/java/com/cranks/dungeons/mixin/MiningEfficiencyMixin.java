@@ -1,8 +1,10 @@
 package com.cranks.dungeons.mixin;
 
+import com.cranks.dungeons.equipment.EquipmentStatApplier;
 import com.cranks.dungeons.registry.ModAttributes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,7 +16,10 @@ public class MiningEfficiencyMixin {
     @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
     private void applyMiningEfficiency(BlockState block, CallbackInfoReturnable<Float> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this;
-        double efficiencyBonus = player.getAttributeValue(ModAttributes.MINING_EFFICIENCY);
+
+        // Get mining efficiency from the tool being used
+        ItemStack tool = player.getMainHandStack();
+        double efficiencyBonus = EquipmentStatApplier.getItemStatValue(tool, "mining_efficiency");
 
         if (efficiencyBonus > 0) {
             float currentSpeed = cir.getReturnValue();

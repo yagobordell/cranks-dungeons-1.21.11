@@ -1,10 +1,11 @@
 package com.cranks.dungeons.event;
 
+import com.cranks.dungeons.equipment.EquipmentStatApplier;
 import com.cranks.dungeons.registry.ModAttributes;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 
 public class FortuneEventHandler {
 
@@ -16,11 +17,13 @@ public class FortuneEventHandler {
                 boolean isOre = blockId.contains("ore") || blockId.contains("debris");
 
                 if (isOre) {
-                    double fortuneChance = player.getAttributeValue(ModAttributes.FORTUNE);
+                    // Get fortune from the tool being used
+                    ItemStack tool = player.getMainHandStack();
+                    double fortuneChance = EquipmentStatApplier.getItemStatValue(tool, "fortune");
 
                     if (fortuneChance > 0 && player.getRandom().nextDouble() < fortuneChance) {
 
-                        Block.dropStacks(state, serverWorld, pos, blockEntity, player, player.getMainHandStack());
+                        Block.dropStacks(state, serverWorld, pos, blockEntity, player, tool);
 
                         serverWorld.playSound(null, pos,
                                 net.minecraft.sound.SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,

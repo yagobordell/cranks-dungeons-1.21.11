@@ -1,10 +1,11 @@
 package com.cranks.dungeons.mixin;
 
+import com.cranks.dungeons.equipment.EquipmentStatApplier;
 import com.cranks.dungeons.registry.ModAttributes;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,7 +28,12 @@ public class CriticalStrikeMixin {
         isCriticalHit.set(false);
 
         if (source.getAttacker() instanceof PlayerEntity attacker) {
+            // Get crit chance from ARMOR (player attributes)
             double critChance = attacker.getAttributeValue(ModAttributes.CRIT_CHANCE);
+
+            // Add crit chance from the WEAPON being used
+            ItemStack weapon = attacker.getMainHandStack();
+            critChance += EquipmentStatApplier.getItemStatValue(weapon, "crit_chance");
 
             if (critChance > 0 && Math.random() < critChance) {
                 isCriticalHit.set(true);

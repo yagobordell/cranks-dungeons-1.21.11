@@ -4,6 +4,8 @@ import com.cranks.dungeons.CranksDungeons;
 import com.cranks.dungeons.stat.CustomStat;
 import com.cranks.dungeons.stat.StatRegistry;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,35 +28,26 @@ public class EquipmentStatApplier {
     public static void updatePlayerStats(PlayerEntity player) {
         removeAllModifiers(player);
 
-        List<ItemStack> equippedItems = new ArrayList<>();
-
+        // Only apply stats from ARMOR to player attributes
+        List<ItemStack> armorItems = new ArrayList<>();
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             ItemStack stack = player.getEquippedStack(slot);
             if (!stack.isEmpty()) {
-                equippedItems.add(stack);
+                armorItems.add(stack);
             }
         }
 
-        ItemStack mainHand = player.getEquippedStack(EquipmentSlot.MAINHAND);
-        if (!mainHand.isEmpty() && !isArmor(mainHand)) {
-            equippedItems.add(mainHand);
-        }
+        Map<String, Double> totalArmorStats = new HashMap<>();
 
-        ItemStack offhand = player.getEquippedStack(EquipmentSlot.OFFHAND);
-        if (!offhand.isEmpty() && !isArmor(offhand)) {
-            equippedItems.add(offhand);
-        }
-
-        Map<String, Double> totalStats = new HashMap<>();
-
-        for (ItemStack stack : equippedItems) {
+        for (ItemStack stack : armorItems) {
             List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
             for (ItemStatManager.ItemStat itemStat : stats) {
-                totalStats.merge(itemStat.statId, itemStat.value, Double::sum);
+                totalArmorStats.merge(itemStat.statId, itemStat.value, Double::sum);
             }
         }
 
-        for (Map.Entry<String, Double> entry : totalStats.entrySet()) {
+        // Apply armor stats to player
+        for (Map.Entry<String, Double> entry : totalArmorStats.entrySet()) {
             String statId = entry.getKey();
             double totalValue = entry.getValue();
 
@@ -76,6 +69,24 @@ public class EquipmentStatApplier {
                 slot == EquipmentSlot.CHEST ||
                 slot == EquipmentSlot.LEGS ||
                 slot == EquipmentSlot.FEET;
+    }
+
+    /**
+     * Gets the total stat value from a specific item.
+     * Used for stats that can't be applied as item attributes (like durability bonus, fortune, etc.)
+     */
+    public static double getItemStatValue(ItemStack stack, String statId) {
+        if (stack.isEmpty()) {
+            return 0.0;
+        }
+
+        List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
+        for (ItemStatManager.ItemStat itemStat : stats) {
+            if (itemStat.statId.equals(statId)) {
+                return itemStat.value;
+            }
+        }
+        return 0.0;
     }
 
     private static void applyStatModifier(PlayerEntity player, CustomStat stat, double value) {

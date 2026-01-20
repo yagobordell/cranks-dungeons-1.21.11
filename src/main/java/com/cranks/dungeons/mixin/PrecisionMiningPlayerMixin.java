@@ -1,5 +1,6 @@
 package com.cranks.dungeons.mixin;
 
+import com.cranks.dungeons.equipment.EquipmentStatApplier;
 import com.cranks.dungeons.registry.ModAttributes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +21,8 @@ public class PrecisionMiningPlayerMixin {
     private void applyPrecisionMining(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner, CallbackInfoReturnable<Boolean> cir) {
         if (!world.isClient() && miner instanceof PlayerEntity player) {
             if (state.getHardness(world, pos) != 0.0F) {
-                double precisionChance = player.getAttributeValue(ModAttributes.PRECISION_MINING);
+                // Get precision mining from the tool being used (the stack parameter)
+                double precisionChance = EquipmentStatApplier.getItemStatValue(stack, "precision_mining");
 
                 if (precisionChance > 0 && player.getRandom().nextDouble() < precisionChance) {
                     cir.setReturnValue(true);

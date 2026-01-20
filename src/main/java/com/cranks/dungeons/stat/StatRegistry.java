@@ -26,7 +26,7 @@ public class StatRegistry {
                 "attack_speed",
                 "Attack Speed",
                 StatCategory.OFFENSIVE,
-                EntityAttributes.ATTACK_SPEED,
+                ModAttributes.ATTACK_SPEED,
                 new double[]{0.10, 0.20, 0.30, 0.40, 0.50},
                 new double[]{0.18, 0.28, 0.38, 0.48, 0.58},
                 true,

@@ -1,8 +1,11 @@
 package com.cranks.dungeons.mixin;
 
+import com.cranks.dungeons.equipment.EquipmentStatApplier;
 import com.cranks.dungeons.registry.ModAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,16 +35,24 @@ public abstract class ElementalDamageMixin {
             return;
         }
 
-        if (source.getAttacker() instanceof LivingEntity attacker) {
+        if (source.getAttacker() instanceof PlayerEntity attacker) {
             LivingEntity target = (LivingEntity) (Object) this;
+            ItemStack weapon = attacker.getMainHandStack();
 
             try {
                 cranks$processingElementalDamage.set(true);
 
+                // Get elemental damage from ARMOR (player attributes)
                 double fireDamage = attacker.getAttributeValue(ModAttributes.FIRE_DAMAGE);
                 double coldDamage = attacker.getAttributeValue(ModAttributes.COLD_DAMAGE);
                 double lightningDamage = attacker.getAttributeValue(ModAttributes.LIGHTNING_DAMAGE);
                 double voidDamage = attacker.getAttributeValue(ModAttributes.VOID_DAMAGE);
+
+                // Add elemental damage from WEAPON
+                fireDamage += EquipmentStatApplier.getItemStatValue(weapon, "fire_damage");
+                coldDamage += EquipmentStatApplier.getItemStatValue(weapon, "cold_damage");
+                lightningDamage += EquipmentStatApplier.getItemStatValue(weapon, "lightning_damage");
+                voidDamage += EquipmentStatApplier.getItemStatValue(weapon, "void_damage");
 
                 double totalElementalDamage = 0;
 
@@ -97,17 +108,22 @@ public abstract class ElementalDamageMixin {
                     }
                 }
 
+                // Life steal from ARMOR + WEAPON
                 double lifeSteal = attacker.getAttributeValue(ModAttributes.LIFE_STEAL);
+                lifeSteal += EquipmentStatApplier.getItemStatValue(weapon, "life_steal");
+
                 if (lifeSteal > 0) {
                     float totalDamage = amount + (float) totalElementalDamage;
                     float healAmount = (float) (totalDamage * lifeSteal);
                     attacker.heal(healAmount);
                 }
 
+                // Chance to burn from ARMOR + WEAPON
                 double chanceToBurn = attacker.getAttributeValue(ModAttributes.CHANCE_TO_BURN);
+                chanceToBurn += EquipmentStatApplier.getItemStatValue(weapon, "chance_to_burn");
+
                 if (chanceToBurn > 0) {
-                    // chanceToBurn is between 0.0 and 1.0 (e.g., 0.5 = 50%)
-                    double roll = Math.random(); // 0.0 to 1.0
+                    double roll = Math.random();
                     if (roll < chanceToBurn) {
                         ((net.minecraft.entity.Entity) target).setOnFireFor(4.0f);
                     }
