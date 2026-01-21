@@ -13,7 +13,7 @@ public class CustomStat {
     private final double[] tierMinValues;
     private final double[] tierMaxValues;
     private final boolean isPercentage;
-    private final boolean storeAsDecimal; // NEW: If true, value is 0.0-1.0 and needs *100 for display
+    private final boolean storeAsDecimal; // If true, value is 0.0-1.0 and needs *100 for display
     private final Formatting color;
 
     public CustomStat(String id, String name, StatCategory category,
@@ -59,7 +59,14 @@ public class CustomStat {
         return min + (Math.random() * (max - min));
     }
 
-    public Text getFormattedValue(double value) {
+    /**
+     * Formats the stat value without color formatting.
+     * Used when we want to apply custom colors separately (like for tier indicators).
+     *
+     * @param value The stat value to format
+     * @return Formatted string without color codes
+     */
+    public String formatValue(double value) {
         String formatted;
 
         if (isPercentage) {
@@ -72,6 +79,18 @@ public class CustomStat {
             formatted = String.format("%.1f", value);
         }
 
-        return Text.literal("+" + formatted + " " + name).formatted(color);
+        return "+" + formatted + " " + name;
+    }
+
+    /**
+     * Legacy method that returns formatted value with the stat's default color.
+     * Kept for backwards compatibility.
+     *
+     * @param value The stat value to format
+     * @return Formatted Text with color
+     */
+    public Text getFormattedValue(double value) {
+        String formatted = formatValue(value);
+        return Text.literal(formatted).formatted(color);
     }
 }

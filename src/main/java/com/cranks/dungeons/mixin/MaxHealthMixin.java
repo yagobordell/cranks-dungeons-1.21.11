@@ -19,20 +19,16 @@ public abstract class MaxHealthMixin {
     private void applyMaxHealthBonus(CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        // Only run on server side
         if (!(player instanceof ServerPlayerEntity)) return;
 
-        // Get max health bonus from custom attribute
         double healthBonus = player.getAttributeValue(ModAttributes.MAX_HEALTH_BONUS);
 
         var maxHealthAttr = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
         if (maxHealthAttr != null) {
             Identifier modifierId = Identifier.of(CranksDungeons.MOD_ID, "max_health_bonus");
 
-            // Remove old modifier
             maxHealthAttr.removeModifier(modifierId);
 
-            // Add new modifier if bonus exists
             if (healthBonus > 0) {
                 EntityAttributeModifier modifier = new EntityAttributeModifier(
                         modifierId,

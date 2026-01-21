@@ -19,20 +19,16 @@ public abstract class BonusArmorMixin {
     private void applyBonusArmor(CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        // Only run on server side
         if (!(player instanceof ServerPlayerEntity)) return;
 
-        // Get bonus armor from custom attribute
         double bonusArmor = player.getAttributeValue(ModAttributes.BONUS_ARMOR);
 
         var armorAttr = player.getAttributeInstance(EntityAttributes.ARMOR);
         if (armorAttr != null) {
             Identifier modifierId = Identifier.of(CranksDungeons.MOD_ID, "bonus_armor");
 
-            // Remove old modifier
             armorAttr.removeModifier(modifierId);
 
-            // Add new modifier if bonus exists
             if (bonusArmor > 0) {
                 EntityAttributeModifier modifier = new EntityAttributeModifier(
                         modifierId,

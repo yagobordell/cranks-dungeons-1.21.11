@@ -19,20 +19,16 @@ public abstract class BonusArmorToughnessMixin {
     private void applyBonusArmorToughness(CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        // Only run on server side
         if (!(player instanceof ServerPlayerEntity)) return;
 
-        // Get bonus armor toughness from custom attribute
         double bonusToughness = player.getAttributeValue(ModAttributes.BONUS_ARMOR_TOUGHNESS);
 
         var toughnessAttr = player.getAttributeInstance(EntityAttributes.ARMOR_TOUGHNESS);
         if (toughnessAttr != null) {
             Identifier modifierId = Identifier.of(CranksDungeons.MOD_ID, "bonus_armor_toughness");
 
-            // Remove old modifier
             toughnessAttr.removeModifier(modifierId);
 
-            // Add new modifier if bonus exists
             if (bonusToughness > 0) {
                 EntityAttributeModifier modifier = new EntityAttributeModifier(
                         modifierId,

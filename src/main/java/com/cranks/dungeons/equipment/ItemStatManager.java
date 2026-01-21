@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.*;
 
@@ -17,10 +18,17 @@ public class ItemStatManager {
     public static class ItemStat {
         public final String statId;
         public final double value;
+        public final int tier;
 
-        public ItemStat(String statId, double value) {
+        public ItemStat(String statId, double value, int tier) {
             this.statId = statId;
             this.value = value;
+            this.tier = tier;
+        }
+
+        // Legacy constructor for backwards compatibility
+        public ItemStat(String statId, double value) {
+            this(statId, value, 1);
         }
     }
 
@@ -40,8 +48,11 @@ public class ItemStatManager {
                         Optional<String> idOpt = statNbt.getString("id");
                         Optional<Double> valueOpt = statNbt.getDouble("value");
 
+                        // Read tier (default to 1 if not present for backwards compatibility)
+                        int tier = statNbt.getInt("tier").orElse(1);
+
                         if (idOpt.isPresent() && valueOpt.isPresent()) {
-                            stats.add(new ItemStat(idOpt.get(), valueOpt.get()));
+                            stats.add(new ItemStat(idOpt.get(), valueOpt.get(), tier));
                         }
                     }
                 }
@@ -58,6 +69,7 @@ public class ItemStatManager {
     public static boolean addRandomStat(ItemStack stack, int tier) {
         System.out.println("=== addRandomStat called ===");
         System.out.println("Current stats: " + getStats(stack).size() + "/5");
+        System.out.println("Tier: " + tier);
 
         if (!canAddStat(stack)) {
             System.out.println("Cannot add stat - already at max");
@@ -130,6 +142,7 @@ public class ItemStatManager {
         NbtCompound newStat = new NbtCompound();
         newStat.putString("id", stat.getId());
         newStat.putDouble("value", value);
+        newStat.putInt("tier", tier); // Store the tier
         statsList.add(newStat);
 
         nbt.put(STATS_KEY, statsList);
@@ -145,14 +158,38 @@ public class ItemStatManager {
 
         if (!stats.isEmpty()) {
             tooltip.add(Text.empty());
-            tooltip.add(Text.literal("Enhanced Stats:").formatted(net.minecraft.util.Formatting.GOLD, net.minecraft.util.Formatting.BOLD));
+            tooltip.add(Text.literal("Enhanced Stats:").formatted(Formatting.GOLD, Formatting.BOLD));
 
             for (ItemStat itemStat : stats) {
                 CustomStat stat = StatRegistry.getStat(itemStat.statId);
                 if (stat != null) {
-                    tooltip.add(Text.literal("  ").append(stat.getFormattedValue(itemStat.value)));
+                    // Create the stat line with tier indicator
+                    Text statText = createStatTooltip(stat, itemStat.value, itemStat.tier);
+                    tooltip.add(Text.literal("  ").append(statText));
                 }
             }
         }
+    }
+
+    private static Text createStatTooltip(CustomStat stat, double value, int tier) {
+        String valueStr = stat.formatValue(value);
+
+        Formatting tierColor = getTierColor(tier);
+
+        return Text.literal(valueStr)
+                .formatted(Formatting.WHITE)
+                .append(Text.literal(" (T" + tier + ")")
+                        .formatted(tierColor));
+    }
+
+    private static Formatting getTierColor(int tier) {
+        return switch (tier) {
+            case 1 -> Formatting.GRAY;
+            case 2 -> Formatting.GRAY;
+            case 3 -> Formatting.GREEN;
+            case 4 -> Formatting.GREEN;
+            case 5 -> Formatting.GOLD;
+            default -> Formatting.WHITE;
+        };
     }
 }
