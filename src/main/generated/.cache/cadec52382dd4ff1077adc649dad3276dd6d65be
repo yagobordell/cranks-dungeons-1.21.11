@@ -1,0 +1,9 @@
+// 1.21.11	-999999999-01-01T00:00:00	Cranks Dungeons/Runic Tome Recipes
+cc6f3eed9383f91f19188cecd26be3cbc6ac4129 data/cranks-dungeons/advancement/recipes/misc/runic_tome_t2.json
+3e2315159451d335fcb1d6d321b1f53848e52b79 data/cranks-dungeons/advancement/recipes/misc/runic_tome_t3.json
+997de264758b03d6c447905e30e4787657dc9d9f data/cranks-dungeons/advancement/recipes/misc/runic_tome_t4.json
+26a213fe99d7b0243f8169c973b1e6b7af127802 data/cranks-dungeons/advancement/recipes/misc/runic_tome_t5.json
+406faccb10c74d3efe9ae2e8538e635411e2d8e2 data/cranks-dungeons/recipe/runic_tome_t2.json
+f7a5beff76ab697e8ae3ae4894a31839dd41a908 data/cranks-dungeons/recipe/runic_tome_t3.json
+47182dd180e30457bb331b98ab19e45dfe44d8a0 data/cranks-dungeons/recipe/runic_tome_t4.json
+a93ec8ad0a93b235e38084c96c37d4a7337f8b1c data/cranks-dungeons/recipe/runic_tome_t5.json

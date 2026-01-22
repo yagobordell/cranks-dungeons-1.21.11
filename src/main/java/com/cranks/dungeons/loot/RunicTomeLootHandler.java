@@ -19,10 +19,12 @@ import java.util.Map;
 /**
  * Handles Runic Tome drops from mobs based on their tier.
  *
- * Drop Rates Philosophy:
- * - Tier 1 Mobs: Primarily drop T1-T2 tomes (Common)
- * - Tier 2 Mobs: Primarily drop T2-T3-T4 tomes (Rare)
- * - Tier 3 Mobs: Primarily drop T3-T4-T5 tomes (Unique)
+ * Drop Rates Philosophy (RARE):
+ * - Tier 1 Mobs: 8% chance for T1-T2 tomes
+ * - Tier 2 Mobs: 8% chance for T2-T4 tomes
+ * - Tier 3 Mobs: 8% chance for T3-T5 tomes
+ *
+ * Tomes can be crafted: 9 tomes → 1 higher tier tome
  */
 public class RunicTomeLootHandler {
 
@@ -63,7 +65,7 @@ public class RunicTomeLootHandler {
         registerTier1(EntityType.HUSK);
         registerTier1(EntityType.STRAY);
         registerTier1(EntityType.DROWNED);
-        registerTier1(EntityType.CREEPER); // Added vanilla creeper
+        registerTier1(EntityType.CREEPER);
 
         // TIER 2 MOBS (Elite enemies, moderate threats)
         registerTier2(EntityType.PILLAGER);
@@ -119,75 +121,68 @@ public class RunicTomeLootHandler {
 
     /**
      * TIER 1 MOBS - Focus on T1 and T2 tomes
-     * Total: 15% drop chance
-     * Distribution (base, no luck):
-     * - T1: 60% of drops (9% overall)
-     * - T2: 35% of drops (5.25% overall)
-     * - T3: 5% of drops (0.75% overall) - Lucky bonus
-     *
-     * With Luck: Shifts distribution toward higher tiers
-     * Each point of luck increases the weight of higher tiers by 10%
+     * Total: 8% drop chance (RARE)
+     * Distribution:
+     * - T1: 65% of drops (5.2% overall)
+     * - T2: 30% of drops (2.4% overall)
+     * - T3: 5% of drops (0.4% overall) - Very lucky
      */
     private static void addTier1Drops(LootPool.Builder poolBuilder) {
         poolBuilder
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T1)
-                        .weight(60)
+                        .weight(65)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T2)
-                        .weight(35)
-                        .quality(1)  // LUCK BONUS: +10% weight per luck point
+                        .weight(30)
+                        .quality(2)  // LUCK BONUS
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T3)
                         .weight(5)
-                        .quality(2)  // LUCK BONUS: +20% weight per luck point (better scaling)
+                        .quality(4)  // LUCK BONUS (strong for rare drop)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(net.minecraft.item.Items.AIR)
-                        .weight(485)
-                        .quality(-1)); // LUCK PENALTY: Less likely to get nothing with luck
+                        .weight(1150)
+                        .quality(-2)); // LUCK PENALTY
     }
 
     /**
      * TIER 2 MOBS - Focus on T2, T3, and T4 tomes
-     * Total: 25% drop chance
-     * Distribution (base, no luck):
-     * - T2: 35% of drops (8.75% overall)
-     * - T3: 40% of drops (10% overall)
-     * - T4: 20% of drops (5% overall)
-     * - T5: 5% of drops (1.25% overall) - Lucky bonus
-     *
-     * With Luck: Higher tiers become more common
+     * Total: 8% drop chance (RARE)
+     * Distribution:
+     * - T2: 30% of drops (2.4% overall)
+     * - T3: 45% of drops (3.6% overall)
+     * - T4: 20% of drops (1.6% overall)
+     * - T5: 5% of drops (0.4% overall) - Very lucky
      */
     private static void addTier2Drops(LootPool.Builder poolBuilder) {
         poolBuilder
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T2)
-                        .weight(35)
+                        .weight(30)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T3)
-                        .weight(40)
-                        .quality(1)  // LUCK BONUS
+                        .weight(45)
+                        .quality(2)  // LUCK BONUS
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T4)
                         .weight(20)
-                        .quality(2)  // LUCK BONUS: Better scaling
+                        .quality(4)  // LUCK BONUS (strong)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T5)
                         .weight(5)
-                        .quality(3)  // LUCK BONUS: Best scaling for rarest item
+                        .quality(6)  // LUCK BONUS (very strong for legendary)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(net.minecraft.item.Items.AIR)
-                        .weight(300)
-                        .quality(-1)); // LUCK PENALTY
+                        .weight(1150)
+                        .quality(-2)); // LUCK PENALTY
     }
 
     /**
      * TIER 3 MOBS - Focus on T3, T4, and T5 tomes
-     * Total: 40% drop chance (bosses/elites should be rewarding)
-     * Distribution (base, no luck):
-     * - T3: 30% of drops (12% overall)
-     * - T4: 40% of drops (16% overall)
-     * - T5: 30% of drops (12% overall) - Much higher than T2 mobs
-     *
-     * With Luck: T5 becomes significantly more common
+     * Total: 8% drop chance (RARE - even bosses!)
+     * Distribution:
+     * - T3: 30% of drops (2.4% overall)
+     * - T4: 40% of drops (3.2% overall)
+     * - T5: 30% of drops (2.4% overall) - Still rare but farmable
      */
     private static void addTier3Drops(LootPool.Builder poolBuilder) {
         poolBuilder
@@ -196,15 +191,15 @@ public class RunicTomeLootHandler {
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T4)
                         .weight(40)
-                        .quality(1)  // LUCK BONUS
+                        .quality(3)  // LUCK BONUS
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(ModItems.RUNIC_TOME_T5)
                         .weight(30)
-                        .quality(3)  // LUCK BONUS: Strong scaling for legendary items
+                        .quality(6)  // LUCK BONUS (strong for legendary)
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
                 .with(ItemEntry.builder(net.minecraft.item.Items.AIR)
-                        .weight(150)
-                        .quality(-2)); // LUCK PENALTY: Stronger than lower tiers
+                        .weight(1150)
+                        .quality(-3)); // LUCK PENALTY (stronger)
     }
 
     private static EntityType<?> getEntityTypeFromLootTable(RegistryKey<LootTable> key) {
