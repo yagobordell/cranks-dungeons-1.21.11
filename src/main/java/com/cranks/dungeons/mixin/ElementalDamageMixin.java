@@ -100,7 +100,6 @@ public abstract class ElementalDamageMixin {
             System.out.println("  Lightning: " + lightningDamageFromChestplate);
             System.out.println("  Void: " + voidDamageFromChestplate);
 
-            // Combine weapon + chestplate
             double fireDamage = fireDamageFromWeapon + fireDamageFromChestplate;
             double coldDamage = coldDamageFromWeapon + coldDamageFromChestplate;
             double lightningDamage = lightningDamageFromWeapon + lightningDamageFromChestplate;
@@ -119,11 +118,8 @@ public abstract class ElementalDamageMixin {
                 double finalDamage = fireDamage * (1.0 - resistance);
                 System.out.println("Fire: " + fireDamage + " * (1 - " + resistance + ") = " + finalDamage);
                 if (finalDamage > 0) {
-                    // Directly damage the entity without triggering damage events
                     target.setHealth(target.getHealth() - (float) finalDamage);
                     totalElementalDamage += finalDamage;
-                    // Set target on fire for visual effect
-                    ((net.minecraft.entity.Entity) target).setOnFireFor(2);
                     System.out.println("  Applied fire damage directly to health");
                 }
             }
@@ -133,12 +129,8 @@ public abstract class ElementalDamageMixin {
                 double finalDamage = coldDamage * (1.0 - resistance);
                 System.out.println("Cold: " + coldDamage + " * (1 - " + resistance + ") = " + finalDamage);
                 if (finalDamage > 0) {
-                    // Directly damage the entity
                     target.setHealth(target.getHealth() - (float) finalDamage);
                     totalElementalDamage += finalDamage;
-                    // Apply slowness effect for cold
-                    target.addStatusEffect(new net.minecraft.entity.effect.StatusEffectInstance(
-                            net.minecraft.entity.effect.StatusEffects.SLOWNESS, 40, 1));
                     System.out.println("  Applied cold damage directly to health");
                 }
             }
@@ -148,7 +140,6 @@ public abstract class ElementalDamageMixin {
                 double finalDamage = lightningDamage * (1.0 - resistance);
                 System.out.println("Lightning: " + lightningDamage + " * (1 - " + resistance + ") = " + finalDamage);
                 if (finalDamage > 0) {
-                    // Directly damage the entity
                     target.setHealth(target.getHealth() - (float) finalDamage);
                     totalElementalDamage += finalDamage;
                     System.out.println("  Applied lightning damage directly to health");
@@ -160,19 +151,14 @@ public abstract class ElementalDamageMixin {
                 double finalDamage = voidDamage * (1.0 - resistance);
                 System.out.println("Void: " + voidDamage + " * (1 - " + resistance + ") = " + finalDamage);
                 if (finalDamage > 0) {
-                    // Directly damage the entity
                     target.setHealth(target.getHealth() - (float) finalDamage);
                     totalElementalDamage += finalDamage;
-                    // Apply wither effect for void
-                    target.addStatusEffect(new net.minecraft.entity.effect.StatusEffectInstance(
-                            net.minecraft.entity.effect.StatusEffects.WITHER, 60, 0));
                     System.out.println("  Applied void damage directly to health");
                 }
             }
 
             System.out.println("Total elemental damage dealt: " + totalElementalDamage);
 
-            // Life steal from weapon + chestplate
             double lifeStealFromWeapon = EquipmentStatApplier.getItemStatValue(weapon, "life_steal");
             double lifeStealFromChestplate = EquipmentStatApplier.getItemStatValue(chestplate, "life_steal");
             double lifeSteal = lifeStealFromWeapon + lifeStealFromChestplate;

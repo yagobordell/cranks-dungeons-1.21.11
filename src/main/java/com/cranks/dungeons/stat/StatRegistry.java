@@ -134,10 +134,10 @@ public class StatRegistry {
                 "Luck",
                 EquipmentType.HELMET,
                 ModAttributes.LUCK,
-                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
-                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
-                true,
-                true,
+                new double[]{0.25, 0.75, 1.5, 2.5, 4.0},
+                new double[]{0.5, 1.25, 2.25, 3.75, 6.0},
+                false,
+                false,
                 Formatting.DARK_GREEN
         ));
 
@@ -377,10 +377,10 @@ public class StatRegistry {
                 "Luck",
                 EquipmentType.CHESTPLATE,
                 ModAttributes.LUCK,
-                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
-                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
-                true,
-                true,
+                new double[]{0.25, 0.75, 1.5, 2.5, 4.0},
+                new double[]{0.5, 1.25, 2.25, 3.75, 6.0},
+                false,
+                false,
                 Formatting.DARK_GREEN
         ));
 
@@ -506,10 +506,10 @@ public class StatRegistry {
                 "Luck",
                 EquipmentType.LEGGINGS,
                 ModAttributes.LUCK,
-                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
-                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
-                true,
-                true,
+                new double[]{0.25, 0.75, 1.5, 2.5, 4.0},
+                new double[]{0.5, 1.25, 2.25, 3.75, 6.0},
+                false,
+                false,
                 Formatting.DARK_GREEN
         ));
 
@@ -659,10 +659,10 @@ public class StatRegistry {
                 "Luck",
                 EquipmentType.BOOTS,
                 ModAttributes.LUCK,
-                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
-                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
-                true,
-                true,
+                new double[]{0.25, 0.75, 1.5, 2.5, 4.0},
+                new double[]{0.5, 1.25, 2.25, 3.75, 6.0},
+                false,
+                false,
                 Formatting.DARK_GREEN
         ));
 
