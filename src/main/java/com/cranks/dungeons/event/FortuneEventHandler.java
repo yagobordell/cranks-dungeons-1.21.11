@@ -1,7 +1,6 @@
 package com.cranks.dungeons.event;
 
-import com.cranks.dungeons.equipment.EquipmentStatApplier;
-import com.cranks.dungeons.registry.ModAttributes;
+import com.cranks.dungeons.equipment.ToolStatHelper;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,7 @@ public class FortuneEventHandler {
                 if (isOre) {
                     // Get fortune from the tool being used
                     ItemStack tool = player.getMainHandStack();
-                    double fortuneChance = EquipmentStatApplier.getItemStatValue(tool, "fortune");
+                    double fortuneChance = ToolStatHelper.getFortune(tool);
 
                     if (fortuneChance > 0 && player.getRandom().nextDouble() < fortuneChance) {
 

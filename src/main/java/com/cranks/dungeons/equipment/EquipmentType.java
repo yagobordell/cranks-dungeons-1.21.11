@@ -1,46 +1,35 @@
 package com.cranks.dungeons.equipment;
 
-import com.cranks.dungeons.stat.StatCategory;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
-import net.minecraft.entity.EquipmentSlot;
 
 import java.util.*;
 
 public enum EquipmentType {
-    HELMET(StatCategory.DEFENSIVE),
-    CHESTPLATE(StatCategory.DEFENSIVE, StatCategory.OFFENSIVE),
-    LEGGINGS(StatCategory.DEFENSIVE),
-    BOOTS(StatCategory.DEFENSIVE, StatCategory.UTILITY),
+    HELMET,
+    CHESTPLATE,
+    LEGGINGS,
+    BOOTS,
 
-    SWORD(StatCategory.OFFENSIVE),
-    SPEAR(StatCategory.OFFENSIVE),
-    MACE(StatCategory.OFFENSIVE),
-    AXE(StatCategory.TOOL),
-    PICKAXE(StatCategory.TOOL),
-    SHOVEL(StatCategory.TOOL),
-    HOE(StatCategory.TOOL),
+    SWORD,
+    SPEAR,
+    MACE,
+    AXE,
+    PICKAXE,
+    SHOVEL,
+    HOE,
 
-    BOW(StatCategory.OFFENSIVE),
-    CROSSBOW(StatCategory.OFFENSIVE),
-    TRIDENT(StatCategory.OFFENSIVE),
+    BOW,
+    CROSSBOW,
+    TRIDENT,
 
-    SHIELD(StatCategory.DEFENSIVE),
-    ELYTRA(StatCategory.UTILITY);
-
-    private final List<StatCategory> allowedCategories;
-
-    EquipmentType(StatCategory... categories) {
-        this.allowedCategories = Arrays.asList(categories);
-    }
-
-    public List<StatCategory> getAllowedCategories() {
-        return allowedCategories;
-    }
+    SHIELD,
+    ELYTRA;
 
     public static Optional<EquipmentType> getTypeForItem(ItemStack stack) {
         Item item = stack.getItem();
 
+        // Check for armor pieces first
         var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
         if (equippable != null) {
             return switch (equippable.slot()) {
@@ -56,27 +45,61 @@ public enum EquipmentType {
 
         System.out.println("Checking equipment type for: " + itemName);
 
+        // Check for weapons
         if (itemName.contains("sword")) {
             System.out.println("Recognized as SWORD");
             return Optional.of(SWORD);
         }
-        if (itemName.contains("mace")) return Optional.of(MACE);
+        if (itemName.contains("mace")) {
+            System.out.println("Recognized as MACE");
+            return Optional.of(MACE);
+        }
         if (itemName.contains("spear")) {
+            System.out.println("Recognized as SPEAR");
             return Optional.of(SPEAR);
         }
 
-        if (itemName.contains("axe") && !itemName.contains("pickaxe")) return Optional.of(AXE);
+        // Check for tools (order matters - axe before pickaxe)
+        if (itemName.contains("axe") && !itemName.contains("pickaxe")) {
+            System.out.println("Recognized as AXE");
+            return Optional.of(AXE);
+        }
+        if (itemName.contains("pickaxe")) {
+            System.out.println("Recognized as PICKAXE");
+            return Optional.of(PICKAXE);
+        }
+        if (itemName.contains("shovel")) {
+            System.out.println("Recognized as SHOVEL");
+            return Optional.of(SHOVEL);
+        }
+        if (itemName.contains("hoe")) {
+            System.out.println("Recognized as HOE");
+            return Optional.of(HOE);
+        }
 
-        if (itemName.contains("pickaxe")) return Optional.of(PICKAXE);
-        if (itemName.contains("shovel")) return Optional.of(SHOVEL);
-        if (itemName.contains("hoe")) return Optional.of(HOE);
+        // Check for ranged weapons
+        if (itemName.contains("bow") && !itemName.contains("crossbow")) {
+            System.out.println("Recognized as BOW");
+            return Optional.of(BOW);
+        }
+        if (itemName.contains("crossbow")) {
+            System.out.println("Recognized as CROSSBOW");
+            return Optional.of(CROSSBOW);
+        }
+        if (itemName.contains("trident")) {
+            System.out.println("Recognized as TRIDENT");
+            return Optional.of(TRIDENT);
+        }
 
-        if (itemName.contains("bow") && !itemName.contains("crossbow")) return Optional.of(BOW);
-        if (itemName.contains("crossbow")) return Optional.of(CROSSBOW);
-        if (itemName.contains("trident")) return Optional.of(TRIDENT);
-
-        if (itemName.contains("shield")) return Optional.of(SHIELD);
-        if (itemName.contains("elytra")) return Optional.of(ELYTRA);
+        // Check for misc equipment
+        if (itemName.contains("shield")) {
+            System.out.println("Recognized as SHIELD");
+            return Optional.of(SHIELD);
+        }
+        if (itemName.contains("elytra")) {
+            System.out.println("Recognized as ELYTRA");
+            return Optional.of(ELYTRA);
+        }
 
         System.out.println("NOT RECOGNIZED as any equipment type");
         return Optional.empty();

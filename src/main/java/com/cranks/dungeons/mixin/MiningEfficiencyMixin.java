@@ -1,7 +1,6 @@
 package com.cranks.dungeons.mixin;
 
-import com.cranks.dungeons.equipment.EquipmentStatApplier;
-import com.cranks.dungeons.registry.ModAttributes;
+import com.cranks.dungeons.equipment.ToolStatHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,7 @@ public class MiningEfficiencyMixin {
 
         // Get mining efficiency from the tool being used
         ItemStack tool = player.getMainHandStack();
-        double efficiencyBonus = EquipmentStatApplier.getItemStatValue(tool, "mining_efficiency");
+        double efficiencyBonus = ToolStatHelper.getMiningEfficiency(tool);
 
         if (efficiencyBonus > 0) {
             float currentSpeed = cir.getReturnValue();

@@ -7,9 +7,11 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
@@ -25,10 +27,15 @@ public class EquipmentStatApplier {
             EquipmentSlot.FEET
     };
 
+    /**
+     * Updates player stats from equipped armor.
+     * This method only handles ARMOR because armor stats are applied to the player entity.
+     * Item tooltip updates are now handled by updateItemAttributes() when stats are added.
+     */
     public static void updatePlayerStats(PlayerEntity player) {
         removeAllModifiers(player);
 
-        // Only apply stats from ARMOR to player attributes
+        // Get all equipped armor pieces
         List<ItemStack> armorItems = new ArrayList<>();
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             ItemStack stack = player.getEquippedStack(slot);
@@ -37,6 +44,7 @@ public class EquipmentStatApplier {
             }
         }
 
+        // Calculate total custom stats from armor
         Map<String, Double> totalArmorStats = new HashMap<>();
 
         for (ItemStack stack : armorItems) {
@@ -46,7 +54,7 @@ public class EquipmentStatApplier {
             }
         }
 
-        // Apply armor stats to player
+        // Apply armor custom stats to player
         for (Map.Entry<String, Double> entry : totalArmorStats.entrySet()) {
             String statId = entry.getKey();
             double totalValue = entry.getValue();
@@ -58,34 +66,168 @@ public class EquipmentStatApplier {
         }
     }
 
-    private static boolean isArmor(ItemStack stack) {
-        var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
-        if (equippable == null) {
-            return false;
+    /**
+     * Updates an item's attribute modifiers based on its custom stats.
+     * This is used for WEAPONS, TOOLS, and ARMOR - their stats must be added as item attributes.
+     * Call this whenever stats are added/removed from an item.
+     */
+    public static void updateItemAttributes(ItemStack stack) {
+        Optional<EquipmentType> equipType = EquipmentType.getTypeForItem(stack);
+        if (equipType.isEmpty()) {
+            return;
         }
 
-        EquipmentSlot slot = equippable.slot();
-        return slot == EquipmentSlot.HEAD ||
-                slot == EquipmentSlot.CHEST ||
-                slot == EquipmentSlot.LEGS ||
-                slot == EquipmentSlot.FEET;
+        EquipmentType type = equipType.get();
+        List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
+
+        System.out.println("=== updateItemAttributes DEBUG ===");
+        System.out.println("Item: " + stack.getItem());
+        System.out.println("Equipment Type: " + type);
+        System.out.println("Custom Stats Count: " + stats.size());
+
+        // Get the item's ORIGINAL default attributes
+        ItemStack defaultStack = new ItemStack(stack.getItem());
+        AttributeModifiersComponent originalDefaults = defaultStack.getOrDefault(
+                DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                AttributeModifiersComponent.DEFAULT
+        );
+
+        System.out.println("Original Default Modifiers:");
+        for (var entry : originalDefaults.modifiers()) {
+            System.out.println("  - " + entry.attribute().getIdAsString() + ": " + entry.modifier().value() + " (slot: " + entry.slot() + ")");
+        }
+
+        if (stats.isEmpty()) {
+            stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, originalDefaults);
+            System.out.println("No custom stats - restored defaults");
+            return;
+        }
+
+        AttributeModifierSlot slot = getSlotForEquipmentType(type);
+        System.out.println("Item slot: " + slot);
+
+        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+
+        Set<RegistryEntry<EntityAttribute>> customStatAttributes = new HashSet<>();
+
+        System.out.println("Custom stats:");
+        for (ItemStatManager.ItemStat itemStat : stats) {
+            CustomStat stat = StatRegistry.getStat(itemStat.statId);
+            if (stat != null) {
+                customStatAttributes.add(stat.getAttribute());
+                System.out.println("  - " + itemStat.statId + " = " + itemStat.value + " (attribute: " + stat.getAttribute().getIdAsString() + ")");
+            }
+        }
+
+        Map<RegistryEntry<EntityAttribute>, Double> defaultValues = new HashMap<>();
+        Map<RegistryEntry<EntityAttribute>, AttributeModifierSlot> defaultSlots = new HashMap<>();
+
+        System.out.println("Processing defaults:");
+        for (var entry : originalDefaults.modifiers()) {
+            if (customStatAttributes.contains(entry.attribute())) {
+                System.out.println("  - MERGING: " + entry.attribute().getIdAsString() + " (default: " + entry.modifier().value() + ")");
+                defaultValues.put(entry.attribute(), entry.modifier().value());
+                defaultSlots.put(entry.attribute(), entry.slot());
+            } else {
+                System.out.println("  - KEEPING: " + entry.attribute().getIdAsString() + " = " + entry.modifier().value());
+                builder.add(entry.attribute(), entry.modifier(), entry.slot());
+            }
+        }
+
+        System.out.println("Adding merged custom stats:");
+        for (ItemStatManager.ItemStat itemStat : stats) {
+            CustomStat stat = StatRegistry.getStat(itemStat.statId);
+            if (stat != null) {
+                Identifier modifierId = Identifier.of(
+                        CranksDungeons.MOD_ID,
+                        "item_" + stat.getId()
+                );
+
+                double defaultValue = defaultValues.getOrDefault(stat.getAttribute(), 0.0);
+                AttributeModifierSlot modifierSlot = defaultSlots.getOrDefault(stat.getAttribute(), slot);
+                double combinedValue = defaultValue + itemStat.value;
+
+                System.out.println("  - " + stat.getAttribute().getIdAsString() + ": " + defaultValue + " + " + itemStat.value + " = " + combinedValue + " (slot: " + modifierSlot + ")");
+
+                EntityAttributeModifier modifier = new EntityAttributeModifier(
+                        modifierId,
+                        combinedValue,
+                        EntityAttributeModifier.Operation.ADD_VALUE
+                );
+
+                builder.add(
+                        stat.getAttribute(),
+                        modifier,
+                        modifierSlot
+                );
+            }
+        }
+
+        AttributeModifiersComponent component = builder.build();
+        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, component);
+
+        System.out.println("Final modifiers set on item:");
+        for (var entry : component.modifiers()) {
+            System.out.println("  - " + entry.attribute().getIdAsString() + ": " + entry.modifier().value() + " (slot: " + entry.slot() + ")");
+        }
+        System.out.println("=== END DEBUG ===\n");
+    }
+
+    /**
+     * Determines the equipment slot for an equipment type.
+     */
+    private static AttributeModifierSlot getSlotForEquipmentType(EquipmentType type) {
+        return switch (type) {
+            case HELMET -> AttributeModifierSlot.HEAD;
+            case CHESTPLATE -> AttributeModifierSlot.CHEST;
+            case LEGGINGS -> AttributeModifierSlot.LEGS;
+            case BOOTS -> AttributeModifierSlot.FEET;
+            case SHIELD -> AttributeModifierSlot.OFFHAND;
+            default -> AttributeModifierSlot.MAINHAND; // Weapons, tools, etc.
+        };
+    }
+
+    /**
+     * Checks if an equipment type is armor.
+     */
+    private static boolean isArmorType(EquipmentType type) {
+        return type == EquipmentType.HELMET ||
+                type == EquipmentType.CHESTPLATE ||
+                type == EquipmentType.LEGGINGS ||
+                type == EquipmentType.BOOTS;
     }
 
     /**
      * Gets the total stat value from a specific item.
      * Used for stats that can't be applied as item attributes (like durability bonus, fortune, etc.)
      */
-    public static double getItemStatValue(ItemStack stack, String statId) {
+    /**
+     * Gets the total stat value from a specific item.
+     * Used for stats that can't be applied as item attributes (like durability bonus, fortune, etc.)
+     * Also works with equipment-type-prefixed stat IDs.
+     */
+    public static double getItemStatValue(ItemStack stack, String baseStatId) {
         if (stack.isEmpty()) {
             return 0.0;
         }
 
         List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
+
+        // Try direct match first (for backwards compatibility)
         for (ItemStatManager.ItemStat itemStat : stats) {
-            if (itemStat.statId.equals(statId)) {
+            if (itemStat.statId.equals(baseStatId)) {
                 return itemStat.value;
             }
         }
+
+        // Try with equipment type prefixes (sword_, pickaxe_, etc.)
+        // This checks if the stat ID ends with "_fire_damage", "_cold_damage", etc.
+        for (ItemStatManager.ItemStat itemStat : stats) {
+            if (itemStat.statId.endsWith("_" + baseStatId)) {
+                return itemStat.value;
+            }
+        }
+
         return 0.0;
     }
 

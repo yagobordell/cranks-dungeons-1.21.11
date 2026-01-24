@@ -1,7 +1,6 @@
 package com.cranks.dungeons.equipment;
 
 import com.cranks.dungeons.stat.CustomStat;
-import com.cranks.dungeons.stat.StatCategory;
 import com.cranks.dungeons.stat.StatRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -84,25 +83,16 @@ public class ItemStatManager {
 
         System.out.println("Equipment type: " + equipType.get());
 
-        List<StatCategory> allowedCategories = equipType.get().getAllowedCategories();
-        if (allowedCategories.isEmpty()) {
-            System.out.println("Cannot add stat - no allowed categories");
-            return false;
-        }
-
-        System.out.println("Allowed categories: " + allowedCategories);
-
-        StatCategory category = allowedCategories.get(new Random().nextInt(allowedCategories.size()));
-        System.out.println("Selected category: " + category);
-
-        CustomStat stat = StatRegistry.getRandomStatForCategory(category);
+        // Get a random stat for this equipment type
+        CustomStat stat = StatRegistry.getRandomStatForEquipmentType(equipType.get());
         if (stat == null) {
-            System.out.println("Cannot add stat - no stats available for category " + category);
+            System.out.println("Cannot add stat - no stats available for equipment type " + equipType.get());
             return false;
         }
 
         System.out.println("Selected stat: " + stat.getId());
 
+        // Check if item already has this stat or one with the same attribute
         List<ItemStat> existingStats = getStats(stack);
         CustomStat newTmpStat = stat;
 
@@ -111,8 +101,10 @@ public class ItemStatManager {
                     CustomStat existingStat = StatRegistry.getStat(s.statId);
                     if (existingStat == null) return false;
 
+                    // Check if same stat ID
                     if (s.statId.equals(newTmpStat.getId())) return true;
 
+                    // Check if same attribute (prevent duplicate attributes)
                     if (existingStat.getAttribute().equals(newTmpStat.getAttribute())) {
                         return true;
                     }
@@ -149,26 +141,16 @@ public class ItemStatManager {
         stack.set(net.minecraft.component.DataComponentTypes.CUSTOM_DATA,
                 net.minecraft.component.type.NbtComponent.of(nbt));
 
+        // Update item attributes for weapons/tools/armor
+        EquipmentStatApplier.updateItemAttributes(stack);
+
         System.out.println("Successfully added stat!");
         return true;
     }
 
     public static void addStatsToTooltip(ItemStack stack, List<Text> tooltip) {
-        List<ItemStat> stats = getStats(stack);
-
-        if (!stats.isEmpty()) {
-            tooltip.add(Text.empty());
-            tooltip.add(Text.literal("Enhanced Stats:").formatted(Formatting.GOLD, Formatting.BOLD));
-
-            for (ItemStat itemStat : stats) {
-                CustomStat stat = StatRegistry.getStat(itemStat.statId);
-                if (stat != null) {
-                    // Create the stat line with tier indicator
-                    Text statText = createStatTooltip(stat, itemStat.value, itemStat.tier);
-                    tooltip.add(Text.literal("  ").append(statText));
-                }
-            }
-        }
+        // Tooltip is now handled entirely by ItemStackTooltipMixin
+        // This method is kept for backwards compatibility but does nothing
     }
 
     private static Text createStatTooltip(CustomStat stat, double value, int tier) {
@@ -177,7 +159,7 @@ public class ItemStatManager {
         Formatting tierColor = getTierColor(tier);
 
         return Text.literal(valueStr)
-                .formatted(Formatting.WHITE)
+                .formatted(stat.getColor())
                 .append(Text.literal(" (T" + tier + ")")
                         .formatted(tierColor));
     }
