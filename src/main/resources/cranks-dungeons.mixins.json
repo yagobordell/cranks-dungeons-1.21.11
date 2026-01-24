@@ -27,6 +27,7 @@
 		"BonusArmorMixin",
 		"BonusArmorToughnessMixin",
 		"LuckMixin",
+		"CropFortuneBlockMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

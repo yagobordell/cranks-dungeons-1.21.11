@@ -840,6 +840,18 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
+                "spear_chance_to_burn",
+                "Chance to burn",
+                EquipmentType.SPEAR,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
+                true,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
                 "spear_fire_damage",
                 "Fire Damage",
                 EquipmentType.SPEAR,
@@ -943,6 +955,18 @@ public class StatRegistry {
         ));
 
         register(new CustomStat(
+                "mace_chance_to_burn",
+                "Chance to burn",
+                EquipmentType.MACE,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
+                true,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
                 "mace_fire_damage",
                 "Fire Damage",
                 EquipmentType.MACE,
@@ -1042,6 +1066,18 @@ public class StatRegistry {
                 true,
                 true,
                 Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "bow_chance_to_burn",
+                "Chance to burn",
+                EquipmentType.BOW,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
+                true,
+                Formatting.RED
         ));
 
         register(new CustomStat(
@@ -1219,7 +1255,7 @@ public class StatRegistry {
         // ===== PICKAXE STATS =====
         register(new CustomStat(
                 "pickaxe_mining_efficiency",
-                "Mining Efficiency",
+                "Mining Speed",
                 EquipmentType.PICKAXE,
                 ModAttributes.MINING_EFFICIENCY,
                 new double[]{0.08, 0.15, 0.23, 0.32, 0.42},
@@ -1231,7 +1267,7 @@ public class StatRegistry {
 
         register(new CustomStat(
                 "pickaxe_fortune",
-                "Fortune",
+                "Ore Fortune",
                 EquipmentType.PICKAXE,
                 ModAttributes.FORTUNE,
                 new double[]{0.10, 0.18, 0.28, 0.40, 0.55},
@@ -1279,7 +1315,7 @@ public class StatRegistry {
         // ===== AXE STATS =====
         register(new CustomStat(
                 "axe_mining_efficiency",
-                "Mining Efficiency",
+                "Chopping Speed",
                 EquipmentType.AXE,
                 ModAttributes.MINING_EFFICIENCY,
                 new double[]{0.08, 0.15, 0.23, 0.32, 0.42},
@@ -1327,7 +1363,7 @@ public class StatRegistry {
         // ===== SHOVEL STATS =====
         register(new CustomStat(
                 "shovel_mining_efficiency",
-                "Mining Efficiency",
+                "Digging Speed",
                 EquipmentType.SHOVEL,
                 ModAttributes.MINING_EFFICIENCY,
                 new double[]{0.08, 0.15, 0.23, 0.32, 0.42},
@@ -1394,6 +1430,18 @@ public class StatRegistry {
                 new double[]{0.5, 0.9, 1.3, 1.7, 2.0},
                 false,
                 Formatting.GREEN
+        ));
+
+        register(new CustomStat(
+                "hoe_crop_fortune",
+                "Crop Fortune",
+                EquipmentType.HOE,
+                ModAttributes.CROP_FORTUNE,
+                new double[]{0.10, 0.18, 0.28, 0.40, 0.55},
+                new double[]{0.15, 0.28, 0.40, 0.55, 0.75},
+                true,
+                true,
+                Formatting.GOLD
         ));
 
         System.out.println("Registered " + STATS.size() + " custom stats");

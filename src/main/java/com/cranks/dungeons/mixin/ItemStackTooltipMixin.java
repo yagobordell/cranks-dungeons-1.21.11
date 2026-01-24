@@ -59,7 +59,64 @@ public abstract class ItemStackTooltipMixin {
             return;
         }
 
+        // Check if this is a shield - if so, use special handling
+        boolean isShield = equipType.get() == EquipmentType.SHIELD;
+
+        if (isShield) {
+            handleShieldTooltip(tooltip, stack);
+        } else {
+            handleNormalTooltip(tooltip, stack, equipType.get());
+        }
+    }
+
+    private void handleShieldTooltip(List<Text> tooltip, ItemStack stack) {
         Text itemName = tooltip.get(0);
+
+        // Build new tooltip for shield
+        List<Text> newTooltip = new ArrayList<>();
+        newTooltip.add(itemName);
+
+        // Add RUNIC STATS section only
+        List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
+        if (!stats.isEmpty()) {
+            newTooltip.add(Text.literal("RUNIC STATS:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+
+            for (ItemStatManager.ItemStat itemStat : stats) {
+                CustomStat stat = StatRegistry.getStat(itemStat.statId);
+                if (stat != null) {
+                    Text statLine = createRunicStatLine(stat, itemStat.value, itemStat.tier);
+                    newTooltip.add(statLine);
+                }
+            }
+        }
+
+        // Add durability and debug info from the end
+        for (int i = 1; i < tooltip.size(); i++) {
+            String line = tooltip.get(i).getString();
+
+            // Keep durability, enchantments, and debug info
+            if (line.contains("Durability:") ||
+                    line.contains("minecraft:") ||
+                    line.contains("component") ||
+                    line.contains("Enchantments:") ||
+                    line.contains("Unbreakable")) {
+                newTooltip.add(tooltip.get(i));
+            }
+        }
+
+        // Replace tooltip
+        tooltip.clear();
+        tooltip.addAll(newTooltip);
+    }
+
+    private void handleNormalTooltip(List<Text> tooltip, ItemStack stack, EquipmentType equipType) {
+        Text itemName = tooltip.get(0);
+
+        // Check if this is armor (we want to skip vanilla attributes for armor)
+        boolean isArmor = equipType == EquipmentType.HELMET ||
+                equipType == EquipmentType.CHESTPLATE ||
+                equipType == EquipmentType.LEGGINGS ||
+                equipType == EquipmentType.BOOTS;
 
         // Find where vanilla attribute section starts and ends
         int attributeSectionStart = -1;
@@ -111,18 +168,36 @@ public abstract class ItemStackTooltipMixin {
         // Add item name
         newTooltip.add(itemName);
 
-        // Add non-attribute lines before attribute section
-        for (int i = 1; i < Math.min(attributeSectionStart != -1 ? attributeSectionStart : tooltip.size(), tooltip.size()); i++) {
-            newTooltip.add(tooltip.get(i));
-        }
+        // For weapons/tools, don't add lines before attribute section (they're usually empty)
+        // Just go straight to custom stats section
 
         // Add custom stats section
-        addCustomStatsSection(stack, newTooltip, equipType.get());
+        addCustomStatsSection(stack, newTooltip, equipType);
 
         // Add everything after attribute section (durability, enchants, debug info, etc.)
         if (attributeSectionEnd != -1 && attributeSectionEnd < tooltip.size()) {
             for (int i = attributeSectionEnd; i < tooltip.size(); i++) {
+                String line = tooltip.get(i).getString();
+
+                // Skip custom attribute lines
+                if (line.contains("attribute.name.cranks-dungeons")) {
+                    continue;
+                }
+
                 newTooltip.add(tooltip.get(i));
+            }
+        } else if (!isArmor) {
+            // For weapons/tools without clear attribute section end
+            for (int i = attributeSectionStart != -1 ? attributeSectionStart : 1; i < tooltip.size(); i++) {
+                String line = tooltip.get(i).getString();
+
+                if (line.contains("attribute.name.cranks-dungeons")) {
+                    continue;
+                }
+
+                if (i >= newTooltip.size()) {
+                    newTooltip.add(tooltip.get(i));
+                }
             }
         }
 
@@ -196,25 +271,6 @@ public abstract class ItemStackTooltipMixin {
         }
     }
 
-    /**
-     * Calculate attribute totals by summing all ADD_VALUE modifiers.
-     * This gives us the modifier value that will be applied to the player's base.
-     */
-    private Map<RegistryEntry<EntityAttribute>, Double> calculateAttributeTotals(AttributeModifiersComponent attributes) {
-        Map<RegistryEntry<EntityAttribute>, Double> totals = new HashMap<>();
-
-        for (var entry : attributes.modifiers()) {
-            EntityAttributeModifier modifier = entry.modifier();
-
-            // Only handle ADD_VALUE operations (operation 0)
-            if (modifier.operation() == EntityAttributeModifier.Operation.ADD_VALUE) {
-                totals.merge(entry.attribute(), modifier.value(), Double::sum);
-            }
-        }
-
-        return totals;
-    }
-
     private Text createRunicStatLine(CustomStat stat, double value, int tier) {
         DecimalFormat df = new DecimalFormat("#.##");
         String valueStr;
@@ -230,12 +286,10 @@ public abstract class ItemStackTooltipMixin {
         // Get tier color
         Formatting tierColor = getTierColor(tier);
 
-        // Format: "Cold Damage: 5.2 [T5]"
-        return Text.literal(stat.getDisplayName() + ": ")
-                .formatted(stat.getColor())
-                .append(Text.literal(valueStr)
-                        .formatted(Formatting.WHITE))
-                .append(Text.literal(" [T" + tier + "]")
+        // Format: "Stat Name: value [TX]" - all in white except tier bracket
+        return Text.literal(stat.getDisplayName() + ": " + valueStr + " ")
+                .formatted(Formatting.WHITE)
+                .append(Text.literal("[T" + tier + "]")
                         .formatted(tierColor));
     }
 

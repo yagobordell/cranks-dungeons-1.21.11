@@ -44,7 +44,7 @@ public class ModAttributes {
     public static final RegistryEntry<EntityAttribute> BREAKING_RANGE = register("breaking_range", 0.0, 0.0, 5.0);
     public static final RegistryEntry<EntityAttribute> MOVEMENT_SPEED = register("movement_speed", 0.0, 0.0, 10.0);
     public static final RegistryEntry<EntityAttribute> LUCK = register("luck", 0.0, 0.0, 100.0);
-
+    public static final RegistryEntry<EntityAttribute> CROP_FORTUNE = register("crop_fortune",0.0, 0.0, 1.0);
     public static final RegistryEntry<EntityAttribute> FEATHER_FALLING = register("feather_falling", 0.0, 0.0, 0.75);
 
     public static void registerAttributes() {
