@@ -342,8 +342,8 @@ public class StatRegistry {
                 "Life Steal",
                 EquipmentType.CHESTPLATE,
                 ModAttributes.LIFE_STEAL,
-                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
-                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.11},
+                new double[]{0.02, 0.05, 0.07, 0.10, 0.13},
                 true,
                 true,
                 Formatting.DARK_RED
@@ -354,8 +354,8 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.CHESTPLATE,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
-                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
+                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
                 false,
                 Formatting.GRAY
         ));
@@ -763,8 +763,8 @@ public class StatRegistry {
                 "Life Steal",
                 EquipmentType.SWORD,
                 ModAttributes.LIFE_STEAL,
-                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
-                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.11},
+                new double[]{0.02, 0.05, 0.07, 0.10, 0.13},
                 true,
                 true,
                 Formatting.DARK_RED
@@ -775,10 +775,21 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.SWORD,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
-                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
+                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
                 false,
                 Formatting.GRAY
+        ));
+
+        register(new CustomStat(
+                "sword_attack_range",
+                "Attack Range",
+                EquipmentType.SWORD,
+                ModAttributes.ATTACK_RANGE,
+                new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
+                false,
+                Formatting.GREEN
         ));
 
         // ===== SPEAR STATS =====
@@ -787,8 +798,8 @@ public class StatRegistry {
                 "Attack Range",
                 EquipmentType.SPEAR,
                 ModAttributes.ATTACK_RANGE,
-                new double[]{0.2, 0.5, 0.8, 1.2, 1.6},
-                new double[]{0.4, 0.8, 1.2, 1.8, 2.5},
+                new double[]{0.3, 0.5, 0.7, 0.9, 1.1},
+                new double[]{0.4, 0.6, 0.8, 1.0, 1.2},
                 false,
                 Formatting.GREEN
         ));
@@ -877,8 +888,8 @@ public class StatRegistry {
                 "Life Steal",
                 EquipmentType.SPEAR,
                 ModAttributes.LIFE_STEAL,
-                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
-                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.11},
+                new double[]{0.02, 0.05, 0.07, 0.10, 0.13},
                 true,
                 true,
                 Formatting.DARK_RED
@@ -889,8 +900,8 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.SPEAR,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
-                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
+                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
                 false,
                 Formatting.GRAY
         ));
@@ -980,8 +991,8 @@ public class StatRegistry {
                 "Life Steal",
                 EquipmentType.MACE,
                 ModAttributes.LIFE_STEAL,
-                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
-                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.11},
+                new double[]{0.02, 0.05, 0.07, 0.10, 0.13},
                 true,
                 true,
                 Formatting.DARK_RED
@@ -992,10 +1003,21 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.MACE,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
-                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
+                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
                 false,
                 Formatting.GRAY
+        ));
+
+        register(new CustomStat(
+                "mace_attack_range",
+                "Attack Range",
+                EquipmentType.MACE,
+                ModAttributes.ATTACK_RANGE,
+                new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
+                false,
+                Formatting.GREEN
         ));
 
         // ===== BOW STATS =====
@@ -1071,8 +1093,8 @@ public class StatRegistry {
                 "Life Steal",
                 EquipmentType.BOW,
                 ModAttributes.LIFE_STEAL,
-                new double[]{0.01, 0.03, 0.05, 0.08, 0.12},
-                new double[]{0.02, 0.05, 0.08, 0.12, 0.18},
+                new double[]{0.01, 0.03, 0.05, 0.07, 0.09},
+                new double[]{0.02, 0.04, 0.06, 0.08, 0.10},
                 true,
                 true,
                 Formatting.DARK_RED
@@ -1083,8 +1105,8 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.BOW,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.2, 0.4, 0.6, 0.9, 1.2},
-                new double[]{0.3, 0.6, 0.9, 1.3, 1.8},
+                new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
                 false,
                 Formatting.GRAY
         ));
@@ -1248,8 +1270,8 @@ public class StatRegistry {
                 "Breaking Range",
                 EquipmentType.PICKAXE,
                 ModAttributes.BREAKING_RANGE,
-                new double[]{0.3, 0.6, 1.0, 1.4, 1.8},
-                new double[]{0.5, 1.0, 1.5, 2.0, 2.8},
+                new double[]{0.3, 0.7, 1.1, 1.5, 1.8},
+                new double[]{0.5, 0.9, 1.3, 1.7, 2.0},
                 false,
                 Formatting.GREEN
         ));
@@ -1296,8 +1318,8 @@ public class StatRegistry {
                 "Breaking Range",
                 EquipmentType.AXE,
                 ModAttributes.BREAKING_RANGE,
-                new double[]{0.3, 0.6, 1.0, 1.4, 1.8},
-                new double[]{0.5, 1.0, 1.5, 2.0, 2.8},
+                new double[]{0.3, 0.7, 1.1, 1.5, 1.8},
+                new double[]{0.5, 0.9, 1.3, 1.7, 2.0},
                 false,
                 Formatting.GREEN
         ));
@@ -1344,25 +1366,13 @@ public class StatRegistry {
                 "Breaking Range",
                 EquipmentType.SHOVEL,
                 ModAttributes.BREAKING_RANGE,
-                new double[]{0.3, 0.6, 1.0, 1.4, 1.8},
-                new double[]{0.5, 1.0, 1.5, 2.0, 2.8},
+                new double[]{0.3, 0.7, 1.1, 1.5, 1.8},
+                new double[]{0.5, 0.9, 1.3, 1.7, 2.0},
                 false,
                 Formatting.GREEN
         ));
 
         // ===== HOE STATS =====
-        register(new CustomStat(
-                "hoe_mining_efficiency",
-                "Mining Efficiency",
-                EquipmentType.HOE,
-                ModAttributes.MINING_EFFICIENCY,
-                new double[]{0.08, 0.15, 0.23, 0.32, 0.42},
-                new double[]{0.12, 0.22, 0.32, 0.45, 0.60},
-                true,
-                true,
-                Formatting.GRAY
-        ));
-
         register(new CustomStat(
                 "hoe_durability_bonus",
                 "Durability Bonus",
@@ -1373,6 +1383,17 @@ public class StatRegistry {
                 true,
                 true,
                 Formatting.BLUE
+        ));
+
+        register(new CustomStat(
+                "hoe_breaking_range",
+                "Breaking Range",
+                EquipmentType.HOE,
+                ModAttributes.BREAKING_RANGE,
+                new double[]{0.3, 0.7, 1.1, 1.5, 1.8},
+                new double[]{0.5, 0.9, 1.3, 1.7, 2.0},
+                false,
+                Formatting.GREEN
         ));
 
         System.out.println("Registered " + STATS.size() + " custom stats");
