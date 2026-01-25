@@ -3,5 +3,7 @@
   "item.cranks-dungeons.runic_tome_t2": "Common Runic Tome",
   "item.cranks-dungeons.runic_tome_t3": "Greater Runic Tome",
   "item.cranks-dungeons.runic_tome_t4": "Superior Runic Tome",
-  "item.cranks-dungeons.runic_tome_t5": "Legendary Runic Tome"
+  "item.cranks-dungeons.runic_tome_t5": "Legendary Runic Tome",
+  "item.cranks-dungeons.runic_enhancement_altar": "Runic Enhancement Altar",
+  "block.cranks-dungeons.runic_enhancement_altar": "Runic Enhancement Altar"
 }

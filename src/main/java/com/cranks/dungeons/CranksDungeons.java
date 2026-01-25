@@ -1,8 +1,11 @@
 package com.cranks.dungeons;
 
+import com.cranks.dungeons.block.ModBlocks;
+import com.cranks.dungeons.block.entity.ModBlockEntities;
 import com.cranks.dungeons.item.ModItems;
 import com.cranks.dungeons.loot.RunicTomeLootHandler;
 import com.cranks.dungeons.registry.ModAttributes;
+import com.cranks.dungeons.screen.ModScreenHandlers;
 import com.cranks.dungeons.stat.StatRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -18,7 +21,10 @@ public class CranksDungeons implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModBlocks.register();
+		ModBlockEntities.register();
 		ModItems.registerModItems();
+		ModScreenHandlers.register();
 		ModAttributes.registerAttributes();
 		StatRegistry.registerStats();
 		com.cranks.dungeons.command.ApplyStatCommand.register();
@@ -26,6 +32,7 @@ public class CranksDungeons implements ModInitializer {
 		com.cranks.dungeons.event.FortuneEventHandler.register();
 		RunicTomeLootHandler.register();
 		FabricDefaultAttributeRegistry.register(EntityType.PLAYER, PlayerEntity.createPlayerAttributes().add(ModAttributes.CROP_FORTUNE, 0.0));
+
 		LOGGER.info("Cranks Dungeons initialized!");
 	}
 }
