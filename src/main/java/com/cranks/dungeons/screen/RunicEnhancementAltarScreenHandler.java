@@ -22,53 +22,49 @@ public class RunicEnhancementAltarScreenHandler extends ScreenHandler {
 
     // Server constructor
     public RunicEnhancementAltarScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-        super(ModScreenHandlers.RUNIC_ENHANCEMENT_ALTAR, syncId); // You'll need to register this
+        super(ModScreenHandlers.RUNIC_ENHANCEMENT_ALTAR, syncId);
         this.inventory = inventory;
         this.blockEntity = inventory instanceof RunicEnhancementAltarBlockEntity ? (RunicEnhancementAltarBlockEntity) inventory : null;
 
         checkSize(inventory, 3);
         inventory.onOpen(playerInventory.player);
 
-        // Equipment slot (left side)
-        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.EQUIPMENT_SLOT, 27, 47) {
+        // Equipment slot - Adjusted to fit the top gray box
+        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.EQUIPMENT_SLOT, 44, 17) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return EquipmentType.getTypeForItem(stack).isPresent();
             }
         });
 
-        // Tome slot (middle)
-        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.TOME_SLOT, 76, 47) {
+        // Tome slot - Adjusted to fit the bottom gray box
+        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.TOME_SLOT, 44, 53) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.getItem() instanceof RunicTomeItem;
             }
         });
 
-        // Result slot (right side)
-        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.RESULT_SLOT, 134, 47) {
+        // Result slot - Centered inside the blue circle
+        this.addSlot(new Slot(inventory, RunicEnhancementAltarBlockEntity.RESULT_SLOT, 116, 35) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return false;
             }
-
-            @Override
-            public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                super.onTakeItem(player, stack);
-            }
         });
 
-        // Player inventory
-        int i;
-        for (i = 0; i < 3; ++i) {
+        // Player inventory - Centered to match the 165 width
+        // Offset by 4 pixels from the left edge to center the 162px wide inventory
+        int inventoryX = 8;
+        for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, inventoryX + j * 18, 84 + i * 18));
             }
         }
 
         // Player hotbar
-        for (i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+        for (int i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(playerInventory, i, inventoryX + i * 18, 142));
         }
     }
 
@@ -138,14 +134,6 @@ public class RunicEnhancementAltarScreenHandler extends ScreenHandler {
     public boolean tryEnhance() {
         if (blockEntity != null) {
             return blockEntity.tryEnhance();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onButtonClick(PlayerEntity player, int id) {
-        if (id == 0) {
-            return tryEnhance();
         }
         return false;
     }

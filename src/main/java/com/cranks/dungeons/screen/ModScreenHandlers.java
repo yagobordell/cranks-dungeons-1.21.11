@@ -13,7 +13,7 @@ public class ModScreenHandlers {
         System.out.println(">>> LOADING SCREEN HANDLERS");
         RUNIC_ENHANCEMENT_ALTAR = Registry.register(
                 Registries.SCREEN_HANDLER,
-                Identifier.of(CranksDungeons.MOD_ID, "runic_enhancement_altar"),
+                Identifier.of(CranksDungeons.MOD_ID, "runic_enhancement_altar_gui"),
                 // Use the standard ScreenHandlerType or Extended if you need extra data
                 new ScreenHandlerType<>(RunicEnhancementAltarScreenHandler::new, net.minecraft.resource.featuretoggle.FeatureFlags.VANILLA_FEATURES)
         );

@@ -12,12 +12,14 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementAltarScreenHandler> {
-    private static final Identifier TEXTURE = Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar.png");
+    // Fixed: Added .png extension to the texture path
+    private static final Identifier TEXTURE = Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui.png");
     private ButtonWidget enhanceButton;
 
     public RunicEnhancementAltarScreen(RunicEnhancementAltarScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundHeight = 166;
+        this.backgroundHeight = 165;
+        this.backgroundWidth = 176;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 
@@ -25,16 +27,17 @@ public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementA
     protected void init() {
         super.init();
 
-        int buttonX = this.x + 98;
-        int buttonY = this.y + 44;
+        int buttonWidth = 48;
+        int buttonHeight = 14;
+        int buttonX = this.x + 28;
+        int buttonY = this.y + 36; // Moved down slightly to not overlap the result slot
 
         this.enhanceButton = ButtonWidget.builder(Text.literal("Enhance"), button -> {
                     if (this.client != null && this.client.interactionManager != null) {
-                        // In 1.21.1, clickButton is the correct way to trigger server-side logic from a simple button
                         this.client.interactionManager.clickButton(this.handler.syncId, 0);
                     }
                 })
-                .dimensions(buttonX, buttonY, 50, 20) // Increased width slightly so "Enhance" fits
+                .dimensions(buttonX, buttonY, buttonWidth, buttonHeight)
                 .build();
 
         this.addDrawableChild(this.enhanceButton);
@@ -52,7 +55,7 @@ public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementA
                 0.0f, 0.0f,
                 this.backgroundWidth,
                 this.backgroundHeight,
-                256, 256
+                176, 165
         );
     }
 

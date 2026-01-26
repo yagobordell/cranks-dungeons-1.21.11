@@ -18,6 +18,9 @@
 		"main": [
 			"com.cranks.dungeons.CranksDungeons"
 		],
+		"client": [
+			"com.cranks.dungeons.CranksDungeonsClient"
+		],
 		"fabric-datagen": [
 			"com.cranks.dungeons.CranksDungeonsDataGenerator"
 		]
