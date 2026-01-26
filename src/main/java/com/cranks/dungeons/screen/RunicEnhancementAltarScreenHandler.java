@@ -137,4 +137,12 @@ public class RunicEnhancementAltarScreenHandler extends ScreenHandler {
         }
         return false;
     }
+
+    @Override
+    public boolean onButtonClick(PlayerEntity player, int id) {
+        if (id == 0) {
+            return tryEnhance();
+        }
+        return false;
+    }
 }

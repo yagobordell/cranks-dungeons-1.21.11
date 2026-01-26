@@ -150,7 +150,10 @@ public class RunicEnhancementAltarBlockEntity extends BlockEntity implements Nam
         ItemStack result = equipment.copy();
 
         // Try to add the stat
-        boolean success = ItemStatManager.addRandomStat(result, runicTome.getTier());
+        boolean success = false;
+        for (int attempts = 0; attempts < 10 && !success; attempts++) {
+            success = ItemStatManager.addRandomStat(result, runicTome.getTier());
+        }
 
         if (success) {
             // Set the result
