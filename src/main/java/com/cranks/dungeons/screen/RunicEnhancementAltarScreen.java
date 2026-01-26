@@ -26,15 +26,25 @@ public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementA
     @Override
     protected void init() {
         super.init();
+        createButton();
+    }
 
+    private void createButton() {
         int buttonWidth = 48;
         int buttonHeight = 14;
         int buttonX = this.x + 28;
-        int buttonY = this.y + 36; // Moved down slightly to not overlap the result slot
+        int buttonY = this.y + 36;
+
+        if (this.enhanceButton != null) {
+            this.remove(this.enhanceButton);
+        }
 
         this.enhanceButton = ButtonWidget.builder(Text.literal("Enhance"), button -> {
                     if (this.client != null && this.client.interactionManager != null) {
                         this.client.interactionManager.clickButton(this.handler.syncId, 0);
+
+                        // Recreate the button to reset its state
+                        this.client.execute(this::createButton);
                     }
                 })
                 .dimensions(buttonX, buttonY, buttonWidth, buttonHeight)

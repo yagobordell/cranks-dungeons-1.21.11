@@ -80,11 +80,6 @@ public class EquipmentStatApplier {
         EquipmentType type = equipType.get();
         List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
 
-        System.out.println("=== updateItemAttributes DEBUG ===");
-        System.out.println("Item: " + stack.getItem());
-        System.out.println("Equipment Type: " + type);
-        System.out.println("Custom Stats Count: " + stats.size());
-
         // Get the item's ORIGINAL default attributes
         ItemStack defaultStack = new ItemStack(stack.getItem());
         AttributeModifiersComponent originalDefaults = defaultStack.getOrDefault(
@@ -92,49 +87,40 @@ public class EquipmentStatApplier {
                 AttributeModifiersComponent.DEFAULT
         );
 
-        System.out.println("Original Default Modifiers:");
         for (var entry : originalDefaults.modifiers()) {
             System.out.println("  - " + entry.attribute().getIdAsString() + ": " + entry.modifier().value() + " (slot: " + entry.slot() + ")");
         }
 
         if (stats.isEmpty()) {
             stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, originalDefaults);
-            System.out.println("No custom stats - restored defaults");
             return;
         }
 
         AttributeModifierSlot slot = getSlotForEquipmentType(type);
-        System.out.println("Item slot: " + slot);
 
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
 
         Set<RegistryEntry<EntityAttribute>> customStatAttributes = new HashSet<>();
 
-        System.out.println("Custom stats:");
         for (ItemStatManager.ItemStat itemStat : stats) {
             CustomStat stat = StatRegistry.getStat(itemStat.statId);
             if (stat != null) {
                 customStatAttributes.add(stat.getAttribute());
-                System.out.println("  - " + itemStat.statId + " = " + itemStat.value + " (attribute: " + stat.getAttribute().getIdAsString() + ")");
             }
         }
 
         Map<RegistryEntry<EntityAttribute>, Double> defaultValues = new HashMap<>();
         Map<RegistryEntry<EntityAttribute>, AttributeModifierSlot> defaultSlots = new HashMap<>();
 
-        System.out.println("Processing defaults:");
         for (var entry : originalDefaults.modifiers()) {
             if (customStatAttributes.contains(entry.attribute())) {
-                System.out.println("  - MERGING: " + entry.attribute().getIdAsString() + " (default: " + entry.modifier().value() + ")");
                 defaultValues.put(entry.attribute(), entry.modifier().value());
                 defaultSlots.put(entry.attribute(), entry.slot());
             } else {
-                System.out.println("  - KEEPING: " + entry.attribute().getIdAsString() + " = " + entry.modifier().value());
                 builder.add(entry.attribute(), entry.modifier(), entry.slot());
             }
         }
 
-        System.out.println("Adding merged custom stats:");
         for (ItemStatManager.ItemStat itemStat : stats) {
             CustomStat stat = StatRegistry.getStat(itemStat.statId);
             if (stat != null) {
@@ -146,8 +132,6 @@ public class EquipmentStatApplier {
                 double defaultValue = defaultValues.getOrDefault(stat.getAttribute(), 0.0);
                 AttributeModifierSlot modifierSlot = defaultSlots.getOrDefault(stat.getAttribute(), slot);
                 double combinedValue = defaultValue + itemStat.value;
-
-                System.out.println("  - " + stat.getAttribute().getIdAsString() + ": " + defaultValue + " + " + itemStat.value + " = " + combinedValue + " (slot: " + modifierSlot + ")");
 
                 EntityAttributeModifier modifier = new EntityAttributeModifier(
                         modifierId,
@@ -166,11 +150,8 @@ public class EquipmentStatApplier {
         AttributeModifiersComponent component = builder.build();
         stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, component);
 
-        System.out.println("Final modifiers set on item:");
         for (var entry : component.modifiers()) {
-            System.out.println("  - " + entry.attribute().getIdAsString() + ": " + entry.modifier().value() + " (slot: " + entry.slot() + ")");
         }
-        System.out.println("=== END DEBUG ===\n");
     }
 
     /**

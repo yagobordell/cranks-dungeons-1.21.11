@@ -66,31 +66,22 @@ public class ItemStatManager {
     }
 
     public static boolean addRandomStat(ItemStack stack, int tier) {
-        System.out.println("=== addRandomStat called ===");
-        System.out.println("Current stats: " + getStats(stack).size() + "/5");
-        System.out.println("Tier: " + tier);
-
         if (!canAddStat(stack)) {
-            System.out.println("Cannot add stat - already at max");
             return false;
         }
 
         Optional<EquipmentType> equipType = EquipmentType.getTypeForItem(stack);
         if (equipType.isEmpty()) {
-            System.out.println("Cannot add stat - item not recognized as equipment");
             return false;
         }
 
-        System.out.println("Equipment type: " + equipType.get());
 
         // Get a random stat for this equipment type
         CustomStat stat = StatRegistry.getRandomStatForEquipmentType(equipType.get());
         if (stat == null) {
-            System.out.println("Cannot add stat - no stats available for equipment type " + equipType.get());
             return false;
         }
 
-        System.out.println("Selected stat: " + stat.getId());
 
         // Check if item already has this stat or one with the same attribute
         List<ItemStat> existingStats = getStats(stack);
@@ -113,12 +104,10 @@ public class ItemStatManager {
                 });
 
         if (alreadyHasStat) {
-            System.out.println("Cannot add stat - already has " + stat.getId() + " or same attribute");
             return false;
         }
 
         double value = stat.rollValue(tier);
-        System.out.println("Rolled value: " + value);
 
         NbtCompound nbt = stack.getOrDefault(net.minecraft.component.DataComponentTypes.CUSTOM_DATA,
                 net.minecraft.component.type.NbtComponent.DEFAULT).copyNbt();
