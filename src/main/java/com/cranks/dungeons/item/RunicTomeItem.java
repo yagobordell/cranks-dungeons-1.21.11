@@ -35,7 +35,7 @@ public class RunicTomeItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, net.minecraft.component.type.TooltipDisplayComponent displayComponent, java.util.function.Consumer<Text> textConsumer, net.minecraft.item.tooltip.TooltipType type) {
         textConsumer.accept(Text.literal("Tier " + tier).formatted(Formatting.GRAY));
-        textConsumer.accept(Text.literal("Contains dormant power...").formatted(Formatting.DARK_PURPLE, Formatting.ITALIC));
+        textConsumer.accept(Text.literal("Power sealed within runes").formatted(Formatting.DARK_PURPLE, Formatting.ITALIC));
         super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 }

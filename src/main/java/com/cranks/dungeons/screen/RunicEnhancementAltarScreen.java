@@ -1,6 +1,7 @@
 package com.cranks.dungeons.screen;
 
 import com.cranks.dungeons.CranksDungeons;
+import com.cranks.dungeons.block.entity.RunicEnhancementAltarBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -12,8 +13,25 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementAltarScreenHandler> {
-    // Fixed: Added .png extension to the texture path
-    private static final Identifier TEXTURE = Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui.png");
+    private static final Identifier STANDARD_TEXTURE = Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui.png");
+
+    private static final Identifier[] TEXTURES = {
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_1.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_2.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_3.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_4.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_5.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_6.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_7.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_8.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_9.png"),
+            Identifier.of(CranksDungeons.MOD_ID, "textures/gui/runic_enhancement_altar_gui_10.png")
+    };
+
+    private int currentTextureIndex = 0;
+    private int tickCounter = 0;
+    private static final int TICKS_PER_TEXTURE = 200;
+
     private ButtonWidget enhanceButton;
 
     public RunicEnhancementAltarScreen(RunicEnhancementAltarScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -58,9 +76,30 @@ public class RunicEnhancementAltarScreen extends HandledScreen<RunicEnhancementA
         int x = (this.width - this.backgroundWidth) / 2;
         int y = (this.height - this.backgroundHeight) / 2;
 
+        // Check if equipment slot has an item
+        boolean hasEquipment = !handler.getSlot(RunicEnhancementAltarBlockEntity.EQUIPMENT_SLOT).getStack().isEmpty();
+
+        Identifier textureToUse;
+
+        if (hasEquipment) {
+            // Show standard texture when equipment is present
+            textureToUse = STANDARD_TEXTURE;
+            // Reset rotation when equipment is added
+            tickCounter = 0;
+            currentTextureIndex = 0;
+        } else {
+            // Rotate through textures when slots are empty
+            tickCounter++;
+            if (tickCounter >= TICKS_PER_TEXTURE) {
+                tickCounter = 0;
+                currentTextureIndex = (currentTextureIndex + 1) % TEXTURES.length;
+            }
+            textureToUse = TEXTURES[currentTextureIndex];
+        }
+
         context.drawTexture(
                 net.minecraft.client.gl.RenderPipelines.GUI_TEXTURED,
-                TEXTURE,
+                textureToUse,
                 x, y,
                 0.0f, 0.0f,
                 this.backgroundWidth,
