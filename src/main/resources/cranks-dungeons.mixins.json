@@ -28,9 +28,14 @@
 		"BonusArmorToughnessMixin",
 		"LuckMixin",
 		"CropFortuneBlockMixin",
+		"CriticalHitMixin",
+		"NoImmunityMixin",
+		"AttackCooldownMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [
+		"ClientPlayerMixin",
+		"ClientAttackMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
