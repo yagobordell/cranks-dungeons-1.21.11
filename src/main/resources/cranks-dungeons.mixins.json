@@ -31,6 +31,7 @@
 		"CriticalHitMixin",
 		"NoImmunityMixin",
 		"AttackCooldownMixin",
+		"ClearAllTradesMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

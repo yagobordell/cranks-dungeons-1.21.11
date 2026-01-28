@@ -82,7 +82,7 @@ public class RunicTomeLootHandler {
         registerTier2(EntityType.PHANTOM);
         registerTier2(EntityType.ZOMBIFIED_PIGLIN);
 
-        // TIER 3 MOBS (Boss/Elite enemies, major threats)
+        // TIER 3 MOBS (Elite enemies, major threats)
         registerTier3(EntityType.RAVAGER);
         registerTier3(EntityType.EVOKER);
         registerTier3(EntityType.PIGLIN_BRUTE);
@@ -90,8 +90,6 @@ public class RunicTomeLootHandler {
         registerTier3(EntityType.ELDER_GUARDIAN);
         registerTier3(EntityType.WITHER_SKELETON);
         registerTier3(EntityType.SHULKER);
-        registerTier3(EntityType.WITHER);
-        registerTier3(EntityType.ENDER_DRAGON);
     }
 
     private static void registerTier1(EntityType<?> entityType) {

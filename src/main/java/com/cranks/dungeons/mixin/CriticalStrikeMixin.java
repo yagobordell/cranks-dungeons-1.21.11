@@ -87,7 +87,7 @@ public class CriticalStrikeMixin {
                         net.minecraft.sound.SoundCategory.PLAYERS, 1.0f, 1.2f);
             });
         }
-
+System.out.println("TOTAL CRIT DAMAGE=" + amount);
         return amount;
     }
 }
