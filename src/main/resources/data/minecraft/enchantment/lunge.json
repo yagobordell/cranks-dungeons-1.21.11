@@ -1,7 +1,7 @@
 {
   "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.minecraft.lunge"
+    "translate": "Lunge"
   },
   "effects": {
     "minecraft:post_piercing_attack": [
