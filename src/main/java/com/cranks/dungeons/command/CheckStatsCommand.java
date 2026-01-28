@@ -64,7 +64,7 @@ public class CheckStatsCommand {
                         if (totalLifeSteal > 0) sendStat(player, "Life Steal", totalLifeSteal * 100, 0, "%");
                         if (totalBurn > 0) sendStat(player, "Burn Chance", totalBurn * 100, 0, "%");
                         if (totalRange > 0) sendStat(player, "Attack Range", totalRange, 0, " blocks");
-                        if (totalKnockback > 0) sendStat(player, "Knockback", totalKnockback, 0, "");
+                        if (totalKnockback > 0) sendStat(player, "Knockback", totalKnockback * 100, 0, "%");
 
                         // DEFENSIVE STATS
                         player.sendMessage(Text.empty(), false);

@@ -154,39 +154,25 @@ public class EquipmentStatApplier {
         }
     }
 
-    /**
-     * Determines the equipment slot for an equipment type.
-     */
     private static AttributeModifierSlot getSlotForEquipmentType(EquipmentType type) {
         return switch (type) {
             case HELMET -> AttributeModifierSlot.HEAD;
-            case CHESTPLATE -> AttributeModifierSlot.CHEST;
+            case CHESTPLATE, ELYTRA -> AttributeModifierSlot.CHEST;
             case LEGGINGS -> AttributeModifierSlot.LEGS;
             case BOOTS -> AttributeModifierSlot.FEET;
             case SHIELD -> AttributeModifierSlot.OFFHAND;
-            default -> AttributeModifierSlot.MAINHAND; // Weapons, tools, etc.
+            default -> AttributeModifierSlot.MAINHAND;
         };
     }
 
-    /**
-     * Checks if an equipment type is armor.
-     */
     private static boolean isArmorType(EquipmentType type) {
         return type == EquipmentType.HELMET ||
                 type == EquipmentType.CHESTPLATE ||
+                type == EquipmentType.ELYTRA ||
                 type == EquipmentType.LEGGINGS ||
                 type == EquipmentType.BOOTS;
     }
 
-    /**
-     * Gets the total stat value from a specific item.
-     * Used for stats that can't be applied as item attributes (like durability bonus, fortune, etc.)
-     */
-    /**
-     * Gets the total stat value from a specific item.
-     * Used for stats that can't be applied as item attributes (like durability bonus, fortune, etc.)
-     * Also works with equipment-type-prefixed stat IDs.
-     */
     public static double getItemStatValue(ItemStack stack, String baseStatId) {
         if (stack.isEmpty()) {
             return 0.0;
@@ -201,8 +187,6 @@ public class EquipmentStatApplier {
             }
         }
 
-        // Try with equipment type prefixes (sword_, pickaxe_, etc.)
-        // This checks if the stat ID ends with "_fire_damage", "_cold_damage", etc.
         for (ItemStatManager.ItemStat itemStat : stats) {
             if (itemStat.statId.endsWith("_" + baseStatId)) {
                 return itemStat.value;

@@ -775,9 +775,10 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.SWORD,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
-                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
-                false,
+                new double[]{0.1, 0.2, 0.4, 0.7, 1.0},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.2},
+                true,
+                true,
                 Formatting.GRAY
         ));
 
@@ -914,7 +915,8 @@ public class StatRegistry {
                 ModAttributes.KNOCKBACK,
                 new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
                 new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
-                false,
+                true,
+                true,
                 Formatting.GRAY
         ));
 
@@ -1027,9 +1029,10 @@ public class StatRegistry {
                 "Knockback",
                 EquipmentType.MACE,
                 ModAttributes.KNOCKBACK,
-                new double[]{0.1, 0.3, 0.6, 0.9, 1.2},
-                new double[]{0.2, 0.5, 0.8, 1.1, 1.4},
-                false,
+                new double[]{0.1, 0.2, 0.4, 0.7, 1.0},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.2},
+                true,
+                true,
                 Formatting.GRAY
         ));
 
@@ -1040,6 +1043,133 @@ public class StatRegistry {
                 ModAttributes.ATTACK_RANGE,
                 new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
                 new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
+                false,
+                Formatting.GREEN
+        ));
+
+        // ===== TRIDENT STATS =====
+        register(new CustomStat(
+                "trident_attack_damage",
+                "Attack Damage",
+                EquipmentType.TRIDENT,
+                EntityAttributes.ATTACK_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
+                false,
+                Formatting.WHITE
+        ));
+
+        register(new CustomStat(
+                "trident_attack_speed",
+                "Attack Speed",
+                EquipmentType.TRIDENT,
+                EntityAttributes.ATTACK_SPEED,
+                new double[]{0.10, 0.20, 0.30, 0.40, 0.50},
+                new double[]{0.18, 0.28, 0.38, 0.48, 0.58},
+                true,
+                true,
+                Formatting.YELLOW
+        ));
+
+        register(new CustomStat(
+                "trident_crit_chance",
+                "Critical Strike Chance",
+                EquipmentType.TRIDENT,
+                ModAttributes.CRIT_CHANCE,
+                new double[]{0.01, 0.03, 0.06, 0.10, 0.15},
+                new double[]{0.02, 0.05, 0.09, 0.14, 0.22},
+                true,
+                true,
+                Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "trident_chance_to_burn",
+                "Chance to burn",
+                EquipmentType.TRIDENT,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
+                true,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "trident_fire_damage",
+                "Fire Damage",
+                EquipmentType.TRIDENT,
+                ModAttributes.FIRE_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "trident_cold_damage",
+                "Cold Damage",
+                EquipmentType.MACE,
+                ModAttributes.COLD_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.AQUA
+        ));
+
+        register(new CustomStat(
+                "trident_lightning_damage",
+                "Lightning Damage",
+                EquipmentType.TRIDENT,
+                ModAttributes.LIGHTNING_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_BLUE
+        ));
+
+        register(new CustomStat(
+                "trident_void_damage",
+                "Void Damage",
+                EquipmentType.TRIDENT,
+                ModAttributes.VOID_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_PURPLE
+        ));
+
+        register(new CustomStat(
+                "trident_life_steal",
+                "Life Steal",
+                EquipmentType.TRIDENT,
+                ModAttributes.LIFE_STEAL,
+                new double[]{0.01, 0.03, 0.05, 0.08, 0.11},
+                new double[]{0.02, 0.05, 0.07, 0.10, 0.13},
+                true,
+                true,
+                Formatting.DARK_RED
+        ));
+
+        register(new CustomStat(
+                "trident_knockback",
+                "Knockback",
+                EquipmentType.TRIDENT,
+                ModAttributes.KNOCKBACK,
+                new double[]{0.1, 0.2, 0.4, 0.7, 1.0},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.2},
+                true,
+                true,
+                Formatting.GRAY
+        ));
+
+        register(new CustomStat(
+                "trident_attack_range",
+                "Attack Range",
+                EquipmentType.TRIDENT,
+                ModAttributes.ATTACK_RANGE,
+                new double[]{0.3, 0.5, 0.7, 0.9, 1.1},
+                new double[]{0.4, 0.6, 0.8, 1.0, 1.2},
                 false,
                 Formatting.GREEN
         ));
@@ -1143,7 +1273,112 @@ public class StatRegistry {
                 ModAttributes.KNOCKBACK,
                 new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
                 new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
+                true,
+                true,
+                Formatting.GRAY
+        ));
+
+        // ===== CROSSBOW STATS ====
+        register(new CustomStat(
+                "crossbow_attack_damage",
+                "Attack Damage",
+                EquipmentType.CROSSBOW,
+                EntityAttributes.ATTACK_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 2.5, 4.5, 7.5, 12.0},
                 false,
+                Formatting.WHITE
+        ));
+
+        register(new CustomStat(
+                "crossbow_crit_chance",
+                "Critical Strike Chance",
+                EquipmentType.CROSSBOW,
+                ModAttributes.CRIT_CHANCE,
+                new double[]{0.01, 0.03, 0.06, 0.10, 0.15},
+                new double[]{0.02, 0.05, 0.09, 0.14, 0.22},
+                true,
+                true,
+                Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "crossbow_chance_to_burn",
+                "Chance to burn",
+                EquipmentType.CROSSBOW,
+                ModAttributes.CHANCE_TO_BURN,
+                new double[]{0.05, 0.12, 0.20, 0.30, 0.42},
+                new double[]{0.10, 0.20, 0.30, 0.45, 0.65},
+                true,
+                true,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "crossbow_fire_damage",
+                "Fire Damage",
+                EquipmentType.CROSSBOW,
+                ModAttributes.FIRE_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.RED
+        ));
+
+        register(new CustomStat(
+                "crossbow_cold_damage",
+                "Cold Damage",
+                EquipmentType.CROSSBOW,
+                ModAttributes.COLD_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.AQUA
+        ));
+
+        register(new CustomStat(
+                "crossbow_lightning_damage",
+                "Lightning Damage",
+                EquipmentType.CROSSBOW,
+                ModAttributes.LIGHTNING_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_BLUE
+        ));
+
+        register(new CustomStat(
+                "crossbow_void_damage",
+                "Void Damage",
+                EquipmentType.CROSSBOW,
+                ModAttributes.VOID_DAMAGE,
+                new double[]{0.5, 1.5, 3.0, 5.0, 8.0},
+                new double[]{1.0, 3.0, 5.5, 9.0, 14.0},
+                false,
+                Formatting.DARK_PURPLE
+        ));
+
+        register(new CustomStat(
+                "crossbow_life_steal",
+                "Life Steal",
+                EquipmentType.CROSSBOW,
+                ModAttributes.LIFE_STEAL,
+                new double[]{0.01, 0.03, 0.05, 0.07, 0.09},
+                new double[]{0.02, 0.04, 0.06, 0.08, 0.10},
+                true,
+                true,
+                Formatting.DARK_RED
+        ));
+
+        register(new CustomStat(
+                "crossbow_knockback",
+                "Knockback",
+                EquipmentType.CROSSBOW,
+                ModAttributes.KNOCKBACK,
+                new double[]{0.1, 0.3, 0.5, 0.7, 0.9},
+                new double[]{0.2, 0.4, 0.6, 0.8, 1.0},
+                true,
+                true,
                 Formatting.GRAY
         ));
 
@@ -1250,6 +1485,78 @@ public class StatRegistry {
                 true,
                 true,
                 Formatting.DARK_PURPLE
+        ));
+
+        // ===== ELYTRA STATS =====
+        register(new CustomStat(
+                "elytra_life_regeneration",
+                "Life Regeneration",
+                EquipmentType.ELYTRA,
+                ModAttributes.LIFE_REGENERATION,
+                new double[]{0.1, 0.25, 0.5, 0.8, 1.2},
+                new double[]{0.2, 0.45, 0.75, 1.2, 2.0},
+                false,
+                Formatting.DARK_RED
+        ));
+
+        register(new CustomStat(
+                "elytra_crit_chance",
+                "Critical Strike Chance",
+                EquipmentType.ELYTRA,
+                ModAttributes.CRIT_CHANCE,
+                new double[]{0.10, 0.13, 0.16, 0.19, 0.23},
+                new double[]{0.12, 0.15, 0.18, 0.21, 0.30},
+                true,
+                true,
+                Formatting.GOLD
+        ));
+
+        register(new CustomStat(
+                "elytra_movement_speed",
+                "Movement Speed",
+                EquipmentType.ELYTRA,
+                EntityAttributes.MOVEMENT_SPEED,
+                new double[]{0.02, 0.03, 0.04, 0.05, 0.06},
+                new double[]{0.025, 0.035, 0.045, 0.055, 0.065},
+                true,
+                true,
+                Formatting.GREEN
+        ));
+
+        register(new CustomStat(
+                "elytra_feather_falling",
+                "Feather Falling",
+                EquipmentType.ELYTRA,
+                ModAttributes.FEATHER_FALLING,
+                new double[]{0.05, 0.15, 0.25, 0.35, 0.45},
+                new double[]{0.10, 0.20, 0.30, 0.40, 0.50},
+                true,
+                true,
+                Formatting.WHITE
+        ));
+
+        register(new CustomStat(
+                "elytra_experience_bonus",
+                "Experience Bonus",
+                EquipmentType.ELYTRA,
+                ModAttributes.EXPERIENCE_BONUS,
+                new double[]{0.30, 0.40, 0.50, 0.60, 0.70},
+                new double[]{0.40, 0.50, 0.60, 0.70, 0.80},
+                true,
+                true,
+                Formatting.DARK_GREEN
+        ));
+
+        register(new CustomStat(
+                "elytra_luck",
+                "Luck",
+                EquipmentType.ELYTRA,
+                ModAttributes.LUCK,
+                new double[]{2.25, 2.75, 3.5, 4.5, 6.0},
+                new double[]{2.5, 3.25, 4.25, 5.75, 8.0},
+                false,
+                false,
+                Formatting.DARK_GREEN
         ));
 
         // ===== PICKAXE STATS =====

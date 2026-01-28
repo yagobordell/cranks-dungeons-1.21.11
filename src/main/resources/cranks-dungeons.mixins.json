@@ -19,11 +19,9 @@
 		"CriticalStrikeMixin",
 		"ElementalDamageMixin",
 		"BonusAttackDamageMixin",
-		"KnockbackMixin",
 		"AttackRangeMixin",
 		"AttackSpeedMixin",
 		"MaxHealthMixin",
-		"KnockbackResistanceMixin",
 		"BonusArmorMixin",
 		"BonusArmorToughnessMixin",
 		"LuckMixin",
@@ -32,6 +30,7 @@
 		"NoImmunityMixin",
 		"AttackCooldownMixin",
 		"ClearAllTradesMixin",
+		"KnockbackProcessorMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

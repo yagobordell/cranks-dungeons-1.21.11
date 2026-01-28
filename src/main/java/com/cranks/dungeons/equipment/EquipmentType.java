@@ -26,24 +26,15 @@ public enum EquipmentType {
     ELYTRA;
 
     public static Optional<EquipmentType> getTypeForItem(ItemStack stack) {
+        if (stack.isEmpty()) return Optional.empty();
         Item item = stack.getItem();
+        String itemName = item.toString().toLowerCase();
 
-        if (item instanceof ShieldItem) {
-            return Optional.of(SHIELD);
+        // 1. Check for specific Unique Items FIRST
+        // This prevents Elytra from being caught by the generic CHEST slot check
+        if (stack.isOf(Items.ELYTRA) || itemName.contains("elytra")) {
+            return Optional.of(ELYTRA);
         }
-        // Check for armor pieces first
-        var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
-        if (equippable != null) {
-            return switch (equippable.slot()) {
-                case HEAD -> Optional.of(HELMET);
-                case CHEST -> Optional.of(CHESTPLATE);
-                case LEGS -> Optional.of(LEGGINGS);
-                case FEET -> Optional.of(BOOTS);
-                default -> Optional.empty();
-            };
-        }
-
-        // Check by item class/type first (more reliable)
         if (item instanceof ShieldItem) {
             return Optional.of(SHIELD);
         }
@@ -60,9 +51,20 @@ public enum EquipmentType {
             return Optional.of(MACE);
         }
 
-        String itemName = item.toString().toLowerCase();
+        // 2. Check for generic Armor slots
+        // Items like Chestplates will be caught here, but Elytra is already handled above
+        var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
+        if (equippable != null) {
+            return switch (equippable.slot()) {
+                case HEAD -> Optional.of(HELMET);
+                case CHEST -> Optional.of(CHESTPLATE);
+                case LEGS -> Optional.of(LEGGINGS);
+                case FEET -> Optional.of(BOOTS);
+                default -> Optional.empty();
+            };
+        }
 
-        // Check for weapons
+        // 3. Check for weapons/tools by name
         if (itemName.contains("sword")) {
             return Optional.of(SWORD);
         }
@@ -82,11 +84,6 @@ public enum EquipmentType {
         }
         if (itemName.contains("hoe")) {
             return Optional.of(HOE);
-        }
-
-        // Check for elytra by name
-        if (itemName.contains("elytra")) {
-            return Optional.of(ELYTRA);
         }
 
         return Optional.empty();
