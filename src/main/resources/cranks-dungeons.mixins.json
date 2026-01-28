@@ -9,7 +9,6 @@
 		"PlayerEntityMixin",
 		"PlayerEquipmentChangeMixin",
 		"ServerPlayerEntityMixin",
-		"ItemStackTooltipMixin",
 		"MiningEfficiencyMixin",
 		"DurabilityBonusMixin",
 		"PrecisionMiningPlayerMixin",
@@ -35,6 +34,7 @@
 		"EnchantmentMixin",
 		"ItemStackTooltipMixin",
 		"ItemStackMixin",
+		"SingleEnchantMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

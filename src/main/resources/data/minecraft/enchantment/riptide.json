@@ -1,0 +1,17 @@
+{
+  "description": "Riptide",
+  "supported_items": "minecraft:trident",
+  "primary_items": "minecraft:trident",
+  "weight": 2,
+  "max_level": 3,
+  "min_cost": { "base": 100, "per_level_above_first": -35 },
+  "max_cost": { "base": 110, "per_level_above_first": -25 },
+  "anvil_cost": 4,
+  "slots": ["mainhand"],
+  "effects": {
+    "minecraft:trident_spin_attack_strength": {
+      "type": "minecraft:add",
+      "value": { "type": "minecraft:linear", "base": 1.0, "per_level_above_first": 1.0 }
+    }
+  }
+}

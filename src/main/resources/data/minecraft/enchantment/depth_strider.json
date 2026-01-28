@@ -1,0 +1,21 @@
+{
+  "description": "Depth Strider",
+  "supported_items": "#minecraft:enchantable/foot_armor",
+  "primary_items": "#minecraft:enchantable/foot_armor",
+  "weight": 2,
+  "max_level": 3,
+  "min_cost": { "base": 100, "per_level_above_first": -35 },
+  "max_cost": { "base": 110, "per_level_above_first": -25 },
+  "anvil_cost": 2,
+  "slots": ["feet"],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "id": "minecraft:enchantment.depth_strider",
+        "attribute": "minecraft:water_movement_efficiency",
+        "amount": { "type": "minecraft:linear", "base": 0.33, "per_level_above_first": 0.33 },
+        "operation": "add_value"
+      }
+    ]
+  }
+}

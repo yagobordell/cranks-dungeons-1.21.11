@@ -14,18 +14,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
 
-    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
-    private void applyCustomRarityColor(CallbackInfoReturnable<Text> cir) {
+    @Inject(
+            method = "getName",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void applyRarityColorToHeldName(CallbackInfoReturnable<Text> cir) {
         ItemStack stack = (ItemStack) (Object) this;
+
         CustomRarity rarity = CustomRarity.getRarity(stack);
-        Formatting color = rarity.getColor();
+        if (rarity == CustomRarity.COMMON || rarity.getColor() == Formatting.WHITE) {
+            return;
+        }
 
-        Text originalName = cir.getReturnValue();
+        Text original = cir.getReturnValue();
 
-        MutableText newName = Text.empty()
-                .append(originalName.copyContentOnly())
-                .setStyle(Style.EMPTY.withColor(color));
+        MutableText coloredName = Text.literal(original.getString())
+                .setStyle(Style.EMPTY.withColor(rarity.getColor()));
 
-        cir.setReturnValue(newName);
+        cir.setReturnValue(coloredName);
     }
 }
