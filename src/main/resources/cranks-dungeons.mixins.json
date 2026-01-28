@@ -31,6 +31,8 @@
 		"AttackCooldownMixin",
 		"ClearAllTradesMixin",
 		"KnockbackProcessorMixin",
+		"AnvilSlotLimitMixin",
+		"EnchantmentMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

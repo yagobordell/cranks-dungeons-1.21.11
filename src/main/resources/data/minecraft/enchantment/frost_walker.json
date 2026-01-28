@@ -1,19 +1,47 @@
 {
-  "description": "",
-  "supported_items": "minecraft:air",
-  "weight": 1,
-  "max_level": 1,
+  "description": "Frost Walker",
+  "supported_items": "#minecraft:enchantable/foot_armor",
+  "weight": 2,
+  "max_level": 2,
   "min_cost": {
-    "base": 999,
-    "per_level_above_first": 0
+    "base": 70,
+    "per_level_above_first": -40
   },
   "max_cost": {
-    "base": 999,
-    "per_level_above_first": 0
+    "base": 80,
+    "per_level_above_first": -30
   },
-  "anvil_cost": 0,
-  "slots": [
-    "mainhand"
-  ],
-  "effects": {}
+  "anvil_cost": 4,
+  "slots": ["feet"],
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:replace_block",
+          "offset": [0, -1, 0],
+          "radius": 4.0,
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:water"
+          },
+          "block_state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:frosted_ice"
+            }
+          },
+          "trigger_game_event": "minecraft:block_place"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "flags": {
+              "is_on_ground": true
+            }
+          }
+        }
+      }
+    ]
+  }
 }

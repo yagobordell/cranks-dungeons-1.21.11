@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:frost_walker",
+    "minecraft:loyalty",
+    "minecraft:infinity"
+  ]
+}

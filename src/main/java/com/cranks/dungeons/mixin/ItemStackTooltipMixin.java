@@ -136,13 +136,16 @@ public abstract class ItemStackTooltipMixin {
 
         if (attributeSectionEnd != -1 && attributeSectionEnd < tooltip.size()) {
             for (int i = attributeSectionEnd; i < tooltip.size(); i++) {
-                if (tooltip.get(i).getString().contains("attribute.name.cranks-dungeons")) continue;
+                String line = tooltip.get(i).getString();
+
+                if (line.contains("attribute.name.cranks-dungeons") ||
+                        line.contains("Attack Damage") ||
+                        line.contains("Attack Speed") ||
+                        line.contains("Armor")) {
+                    continue;
+                }
+
                 newTooltip.add(tooltip.get(i));
-            }
-        } else if (equipType != null) {
-            for (int i = attributeSectionStart != -1 ? attributeSectionStart : 1; i < tooltip.size(); i++) {
-                if (tooltip.get(i).getString().contains("attribute.name.cranks-dungeons")) continue;
-                if (i >= newTooltip.size()) newTooltip.add(tooltip.get(i));
             }
         }
 
@@ -151,14 +154,19 @@ public abstract class ItemStackTooltipMixin {
     }
 
     private void addCustomStatsSection(ItemStack stack, List<Text> tooltip, EquipmentType type) {
-        AttributeModifiersComponent attributes = stack.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT);
+        AttributeModifiersComponent attributes = stack.getOrDefault(
+                DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                AttributeModifiersComponent.DEFAULT
+        );
+
         Map<RegistryEntry<EntityAttribute>, Double> attributeTotals = new HashMap<>();
         for (var entry : attributes.modifiers()) {
             attributeTotals.merge(entry.attribute(), entry.modifier().value(), Double::sum);
         }
 
         DecimalFormat df = new DecimalFormat("#.##");
-        boolean isArmor = type == EquipmentType.HELMET || type == EquipmentType.CHESTPLATE || type == EquipmentType.LEGGINGS || type == EquipmentType.BOOTS || type == EquipmentType.ELYTRA;
+        boolean isArmor = type == EquipmentType.HELMET || type == EquipmentType.CHESTPLATE ||
+                type == EquipmentType.LEGGINGS || type == EquipmentType.BOOTS || type == EquipmentType.ELYTRA;
 
         if (isArmor) {
             if (attributeTotals.containsKey(EntityAttributes.ARMOR)) {
@@ -176,10 +184,33 @@ public abstract class ItemStackTooltipMixin {
             }
         }
 
+        CustomRarity rarity = CustomRarity.getRarity(stack);
+        int maxSlots = switch (rarity) {
+            case COMMON -> 1;
+            case RARE -> 2;
+            case UNIQUE -> 3;
+        };
+
+        var enchantmentComponent = stack.getEnchantments();
+        List<Text> activeEnchants = new ArrayList<>();
+
+        for (var entry : enchantmentComponent.getEnchantmentEntries()) {
+            Text enchantName = entry.getKey().value().description();
+            activeEnchants.add(Text.literal("[ " + enchantName.getString() + " ]").formatted(Formatting.AQUA));
+        }
+
+        for (int i = 0; i < maxSlots; i++) {
+            if (i < activeEnchants.size()) {
+                tooltip.add(activeEnchants.get(i));
+            } else {
+                tooltip.add(Text.literal("[ Enchantment Slot ]").formatted(Formatting.GRAY));
+            }
+        }
+
         List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
         if (!stats.isEmpty()) {
-            tooltip.add(Text.empty());
-            tooltip.add(Text.literal("RUNIC STATS:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+            tooltip.add(Text.literal("Runic Stats:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+
             for (ItemStatManager.ItemStat itemStat : stats) {
                 CustomStat stat = StatRegistry.getStat(itemStat.statId);
                 if (stat != null) {
