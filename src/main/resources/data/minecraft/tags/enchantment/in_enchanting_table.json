@@ -1,8 +1,12 @@
 {
   "replace": true,
   "values": [
+    "minecraft:aqua_affinity",
     "minecraft:frost_walker",
+    "minecraft:channeling",
+    "minecraft:infinity",
     "minecraft:loyalty",
-    "minecraft:infinity"
+    "minecraft:multishot",
+    "minecraft:silk_touch"
   ]
 }

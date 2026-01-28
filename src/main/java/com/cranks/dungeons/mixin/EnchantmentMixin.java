@@ -15,8 +15,6 @@ public class EnchantmentMixin {
      */
     @Overwrite
     public static Text getName(RegistryEntry<Enchantment> enchantment, int level) {
-        // This returns the base description (e.g., "Loyalty")
-        // and ignores the 'level' integer entirely.
         return enchantment.value().description();
     }
 }

@@ -33,6 +33,8 @@
 		"KnockbackProcessorMixin",
 		"AnvilSlotLimitMixin",
 		"EnchantmentMixin",
+		"ItemStackTooltipMixin",
+		"ItemStackMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [

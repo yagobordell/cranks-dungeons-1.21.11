@@ -28,12 +28,13 @@ public enum CustomRarity {
     public static CustomRarity getRarity(ItemStack stack) {
         if (stack.isEmpty()) return COMMON;
 
+        // 1. Check for Uniques FIRST
         if (stack.isOf(Items.ELYTRA) || stack.isOf(Items.TRIDENT) || stack.isOf(Items.MACE)) {
             return UNIQUE;
         }
 
+        // 2. Check for Diamond/Netherite Equipment
         String itemName = stack.getItem().toString().toLowerCase();
-
         if (itemName.contains("diamond") || itemName.contains("netherite")) {
             if (isEquipment(itemName)) {
                 return RARE;
@@ -44,9 +45,10 @@ public enum CustomRarity {
     }
 
     private static boolean isEquipment(String name) {
-        return name.contains("sword") || name.contains("axe") || name.contains("pickaxe") ||
-                name.contains("shovel") || name.contains("hoe") || name.contains("helmet") ||
-                name.contains("chestplate") || name.contains("leggings") || name.contains("boots") ||
-                name.contains("spear");
+        return name.endsWith("sword") || name.endsWith("axe") || name.endsWith("pickaxe") ||
+                name.endsWith("shovel") || name.endsWith("hoe") || name.endsWith("helmet") ||
+                name.endsWith("chestplate") || name.endsWith("leggings") || name.endsWith("boots") ||
+                name.endsWith("spear") || name.endsWith("elytra") || name.endsWith("trident") ||
+                name.endsWith("mace");
     }
 }

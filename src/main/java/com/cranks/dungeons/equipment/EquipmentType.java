@@ -2,6 +2,7 @@ package com.cranks.dungeons.equipment;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
+import net.minecraft.registry.tag.ItemTags;
 import java.util.*;
 
 public enum EquipmentType {
@@ -30,29 +31,15 @@ public enum EquipmentType {
         Item item = stack.getItem();
         String itemName = item.toString().toLowerCase();
 
-        // 1. Check for specific Unique Items FIRST
-        // This prevents Elytra from being caught by the generic CHEST slot check
-        if (stack.isOf(Items.ELYTRA) || itemName.contains("elytra")) {
-            return Optional.of(ELYTRA);
-        }
-        if (item instanceof ShieldItem) {
-            return Optional.of(SHIELD);
-        }
-        if (item instanceof BowItem) {
-            return Optional.of(BOW);
-        }
-        if (item instanceof CrossbowItem) {
-            return Optional.of(CROSSBOW);
-        }
-        if (item instanceof TridentItem) {
-            return Optional.of(TRIDENT);
-        }
-        if (item instanceof MaceItem) {
-            return Optional.of(MACE);
-        }
+        // 1. Check for specific Classes/Items FIRST (Most Accurate)
+        if (stack.isOf(Items.ELYTRA)) return Optional.of(ELYTRA);
+        if (item instanceof ShieldItem) return Optional.of(SHIELD);
+        if (item instanceof BowItem) return Optional.of(BOW);
+        if (item instanceof CrossbowItem) return Optional.of(CROSSBOW);
+        if (item instanceof TridentItem) return Optional.of(TRIDENT);
+        if (item instanceof MaceItem) return Optional.of(MACE);
 
-        // 2. Check for generic Armor slots
-        // Items like Chestplates will be caught here, but Elytra is already handled above
+        // 2. Check for generic Armor slots using Data Components
         var equippable = stack.get(DataComponentTypes.EQUIPPABLE);
         if (equippable != null) {
             return switch (equippable.slot()) {
@@ -64,28 +51,39 @@ public enum EquipmentType {
             };
         }
 
-        // 3. Check for weapons/tools by name
-        if (itemName.contains("sword")) {
+        // 3. Check for weapons/tools using Tags and Strict Suffixes
+        // This prevents "waxed_copper" matching "axe"
+
+        // Swords
+        if (stack.isIn(ItemTags.SWORDS) || itemName.endsWith("_sword") || itemName.equals("sword")) {
             return Optional.of(SWORD);
         }
-        if (itemName.contains("spear")) {
+
+        // Spears (Custom items usually follow the "_spear" naming convention)
+        if (itemName.endsWith("_spear") || itemName.equals("spear")) {
             return Optional.of(SPEAR);
         }
 
-        // Check for tools (order matters - axe before pickaxe)
-        if (itemName.contains("axe") && !itemName.contains("pickaxe")) {
-            return Optional.of(AXE);
+        // Axes (Strict check: must end with _axe or be in the Axe tag)
+        if (stack.isIn(ItemTags.AXES) || itemName.endsWith("_axe") || itemName.equals("axe")) {
+            // Extra safety to ensure pickaxes aren't caught as axes (though endsWith solves this)
+            if (!itemName.endsWith("_pickaxe")) {
+                return Optional.of(AXE);
+            }
         }
-        if (itemName.contains("pickaxe")) {
+
+        // Other Tools
+        if (stack.isIn(ItemTags.PICKAXES) || itemName.endsWith("_pickaxe") || itemName.equals("pickaxe")) {
             return Optional.of(PICKAXE);
         }
-        if (itemName.contains("shovel")) {
+        if (stack.isIn(ItemTags.SHOVELS) || itemName.endsWith("_shovel") || itemName.equals("shovel")) {
             return Optional.of(SHOVEL);
         }
-        if (itemName.contains("hoe")) {
+        if (stack.isIn(ItemTags.HOES) || itemName.endsWith("_hoe") || itemName.equals("hoe")) {
             return Optional.of(HOE);
         }
 
+        // If it's a block or non-equipment item, it will reach here and return empty.
         return Optional.empty();
     }
 
