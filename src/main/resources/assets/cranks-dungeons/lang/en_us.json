@@ -5,5 +5,16 @@
   "item.cranks-dungeons.runic_tome_t4": "Superior Runic Tome",
   "item.cranks-dungeons.runic_tome_t5": "Legendary Runic Tome",
   "item.cranks-dungeons.runic_enhancement_altar": "Runic Enhancement Altar",
-  "block.cranks-dungeons.runic_enhancement_altar": "Runic Enhancement Altar"
+  "block.cranks-dungeons.runic_enhancement_altar": "Runic Enhancement Altar",
+  "enchantment.cranks-dungeons.lunge": "Lunge",
+  "enchantment.cranks-dungeons.lunge.desc": "Jab attacks propel the wielder forward",
+
+  "enchantment.cranks-dungeons.riptide": "Riptide",
+  "enchantment.cranks-dungeons.riptide.desc": "Launches the user when used in water or rain,",
+  "enchantment.cranks-dungeons.riptide.desc2": "replacing the trident's ability to be thrown",
+
+
+  "enchantment.cranks-dungeons.wind_burst": "Wind Burst",
+  "enchantment.cranks-dungeons.wind_burst.desc": "Causes a powerful upward knockback effect",
+  "enchantment.cranks-dungeons.wind_burst.desc2": "upon smash attack, does not negate fall damage"
 }

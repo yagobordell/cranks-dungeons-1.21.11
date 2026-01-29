@@ -72,7 +72,7 @@ public abstract class ItemStackTooltipMixin {
 
         List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
         if (!stats.isEmpty()) {
-            newTooltip.add(Text.literal("RUNIC STATS:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+            newTooltip.add(Text.literal("RUNIC STATS:").formatted(Formatting.AQUA, Formatting.BOLD));
 
             for (ItemStatManager.ItemStat itemStat : stats) {
                 CustomStat stat = StatRegistry.getStat(itemStat.statId);
@@ -170,17 +170,17 @@ public abstract class ItemStackTooltipMixin {
 
         if (isArmor) {
             if (attributeTotals.containsKey(EntityAttributes.ARMOR)) {
-                tooltip.add(Text.literal("Armor: " + df.format(attributeTotals.get(EntityAttributes.ARMOR))).formatted(Formatting.DARK_GREEN));
+                tooltip.add(Text.literal("Armor: " + df.format(attributeTotals.get(EntityAttributes.ARMOR))).formatted(Formatting.WHITE));
             }
             if (attributeTotals.containsKey(EntityAttributes.ARMOR_TOUGHNESS)) {
-                tooltip.add(Text.literal("Armor Toughness: " + df.format(attributeTotals.get(EntityAttributes.ARMOR_TOUGHNESS))).formatted(Formatting.DARK_GREEN));
+                tooltip.add(Text.literal("Armor Toughness: " + df.format(attributeTotals.get(EntityAttributes.ARMOR_TOUGHNESS))).formatted(Formatting.WHITE));
             }
         } else {
             if (attributeTotals.containsKey(EntityAttributes.ATTACK_DAMAGE)) {
-                tooltip.add(Text.literal("Attack Damage: " + df.format(PLAYER_BASE_ATTACK_DAMAGE + attributeTotals.get(EntityAttributes.ATTACK_DAMAGE))).formatted(Formatting.DARK_GREEN));
+                tooltip.add(Text.literal("Attack Damage: " + df.format(PLAYER_BASE_ATTACK_DAMAGE + attributeTotals.get(EntityAttributes.ATTACK_DAMAGE))).formatted(Formatting.WHITE));
             }
             if (attributeTotals.containsKey(EntityAttributes.ATTACK_SPEED)) {
-                tooltip.add(Text.literal("Attack Speed: " + df.format(PLAYER_BASE_ATTACK_SPEED + attributeTotals.get(EntityAttributes.ATTACK_SPEED))).formatted(Formatting.DARK_GREEN));
+                tooltip.add(Text.literal("Attack Speed: " + df.format(PLAYER_BASE_ATTACK_SPEED + attributeTotals.get(EntityAttributes.ATTACK_SPEED))).formatted(Formatting.WHITE));
             }
         }
 
@@ -196,20 +196,20 @@ public abstract class ItemStackTooltipMixin {
 
         for (var entry : enchantmentComponent.getEnchantmentEntries()) {
             Text enchantName = entry.getKey().value().description();
-            activeEnchants.add(Text.literal("[ " + enchantName.getString() + " ]").formatted(Formatting.AQUA));
+            activeEnchants.add(Text.literal("[ " + enchantName.getString() + " ]").formatted(Formatting.DARK_PURPLE));
         }
 
         for (int i = 0; i < maxSlots; i++) {
             if (i < activeEnchants.size()) {
                 tooltip.add(activeEnchants.get(i));
             } else {
-                tooltip.add(Text.literal("[ Enchantment Slot ]").formatted(Formatting.GRAY));
+                tooltip.add(Text.literal("[ Enchantment Slot ]").formatted(Formatting.DARK_GRAY));
             }
         }
 
         List<ItemStatManager.ItemStat> stats = ItemStatManager.getStats(stack);
         if (!stats.isEmpty()) {
-            tooltip.add(Text.literal("Runic Stats:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+            tooltip.add(Text.literal("Runic Stats:").formatted(Formatting.AQUA, Formatting.BOLD));
 
             for (ItemStatManager.ItemStat itemStat : stats) {
                 CustomStat stat = StatRegistry.getStat(itemStat.statId);

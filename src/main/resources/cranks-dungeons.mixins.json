@@ -35,10 +35,12 @@
 		"ItemStackTooltipMixin",
 		"ItemStackMixin",
 		"SingleEnchantMixin",
+		"EnchantedBookDescriptionMixin",
 		"FeatherFallingMixin"
 	],
 	"client": [
 		"ClientPlayerMixin",
+		"EnchantingTableTooltipMixin",
 		"ClientAttackMixin"
 	],
 	"injectors": {
